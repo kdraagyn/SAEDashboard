@@ -1,0 +1,182 @@
+<frames>
+	<frame>
+		<canId>0CFFF048</canId>
+		<length>2</length>
+		<type>unsigned int</type>
+		<parameter>Rpm</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF050</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>TPS</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF052</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Fuel Open Time</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF054</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Ignition Angle</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF148</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Barometer</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF150</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>MAP</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF152</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Lambda</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF154</canId>
+		<length>1</length>
+		<type>unsigned char</type>
+		<parameter>Pressure Type</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF248</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Analog Input 1</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF250</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Analog Input 2</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF252</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Analog Input 3</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF254</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Analog Input 4</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF348</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Analog Input 5</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF350</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Analog Input 6</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF352</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Analog Input 7</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF354</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Analog Input 8</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF448</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Frequency 1</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF450</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Frequency 2</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF452</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Frequency 3</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF454</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Frequency 4</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF548</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Battery Voltage</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF550</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Air Temp</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF552</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Coolant Temp</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF554</canId>
+		<length>1</length>
+		<type>unsigned char</type>
+		<parameter>Temp Type</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF648</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Analog Input 5 - Thermistor</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF650</canId>
+		<length>2</length>
+		<type>signed int</type>
+		<parameter>Analog Input 7 - Thermistor</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF652</canId>
+		<length>1</length>
+		<type>unsigned char</type>
+		<parameter>Version Major</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF654</canId>
+		<length>1</length>
+		<type>unsigned char</type>
+		<parameter>Version Minor</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF656</canId>
+		<length>1</length>
+		<type>unsigned char</type>
+		<parameter>Version Build</parameter>
+	</frame>
+	<frame>
+		<canId>0CFFF658</canId>
+		<length>1</length>
+		<type>unsigned char</type>
+		<parameter>TBD</parameter>
+	</frame>
+</frames>
