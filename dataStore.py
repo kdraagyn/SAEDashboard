@@ -1,4 +1,5 @@
 import xml.etree.cElementTree as xmlreader
+from dashExceptions import missingIdException
 
 class canStore(object):
 	"""data structure and manager for all data in the program"""
@@ -18,8 +19,16 @@ class canStore(object):
 
 			self.frameDictionary[frame.canId] = frame
 
-	def get(self, id):
-		return self.frameDictionary[id]
+	def get(self, frameId):
+		if(frameId not in self.frameDictionary):
+			raise missingIdException(frameId)
+		return self.frameDictionary[frameId]
+
+	def getPack(self, packIds):
+		pack = []
+		for frameId in packIds:
+			pack.append(self.get(frameId))
+		return pack
 
 	def update(self):
 		for frame in self.frameDictionary:
@@ -35,4 +44,4 @@ class canFrame(object):
 		self.parameter = ""
 		self.length = 0
 		self.type = ""
-		self.data = 0
+		self.data = 200
