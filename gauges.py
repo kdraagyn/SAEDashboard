@@ -14,6 +14,12 @@ class gauge():
 	width = 0
 	height = 0
 
+	def setLocation(xloc=0, yloc=0, width=0, height=0):
+		self.xloc = xloc
+		self.yloc = yloc
+		self.width = width
+		self.height = height
+
 	def subscribe(self, *canIds):
 		for canId in canIds:
 			if(canId not in self.dataIds):
@@ -26,6 +32,7 @@ class gauge():
 # 
 
 # Here is an example gauge class that doesn't do anything really except a few text fields
+# This is not the ideal gauge. This is me programming at 6 in the morning and just wanting to get something working. yes.
 class textGauge(gauge): # the class must inherit (i.e the "gauge" within the parentheses) from the main gauge class
 
 	# variables you can use from the gauge class:
@@ -66,6 +73,7 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 		self.canvas.delete(self.mapId)				# deletes the map text using the tpsId that is saved a class variable
 		self.renderText(rpm=dataPack[0].data, barometer=dataPack[1].data, tps=dataPack[2].data, map=dataPack[3].data)
 
+	# this is the crap part lots of copy code... #itworks #doAsIsayAndNotAsIdo #hashTagsInCommentsWTF? #ImTired
 	def renderText(self, rpm=0, barometer=0, tps=0, map=0):
 		# saves a reference to the created text element in rpmReference
 		self.rpmReference = self.canvas.create_text(self.xloc, self.yloc,anchor="nw", text="RPM: {0}".format(rpm)) # creates the text on the screen

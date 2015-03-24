@@ -9,3 +9,5 @@ python libraries needed to install:
 			[default]
 			interface = socketcan_native
 			channel = vcan0
+
+To see how to declare a new gauge interface look at the gauges.py file. I commented out the textGauge
