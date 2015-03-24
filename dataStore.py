@@ -1,5 +1,5 @@
 import xml.etree.cElementTree as xmlreader
-from dashExceptions import missingIdException
+from dashExceptions import *
 
 class canStore(object):
 	"""data structure and manager for all data in the program"""
@@ -16,6 +16,11 @@ class canStore(object):
 			frame.parameter = xmlframe.findtext("parameter")
 			frame.length = int(xmlframe.findtext("length"))
 			frame.type = xmlframe.findtext("type")
+			if(xmlframe.findtext("max") != None):
+				frame.max = int(xmlframe.findtext("max"))
+			if(xmlframe.findtext("warning") != None):
+				frame.warning = xmlframe.findtext("warning")
+			print(frame.max)
 
 			self.frameDictionary[frame.canId] = frame
 
@@ -32,8 +37,11 @@ class canStore(object):
 
 	def update(self):
 		for frame in self.frameDictionary:
-			# update through can buss
-			pass
+			# TODO update through can bus
+			self.frameDictionary[frame].data += 50
+			if(self.frameDictionary[frame].max != None):
+				if(self.frameDictionary[frame].data > self.frameDictionary[frame].max):
+					raise unsafeOperationException(self.frameDictionary[frame])
 
 
 class canFrame(object):
@@ -45,3 +53,5 @@ class canFrame(object):
 		self.length = 0
 		self.type = ""
 		self.data = 200
+		self.max = None
+		self.warning = None

@@ -1,9 +1,22 @@
+<!-- xml that describes all the different frames of data being sent over the can bus -->
+<!-- 
+	frames
+		frame
+			canId
+			length
+			type
+			parameter
+			max
+			warning
+ -->
 <frames>
 	<frame>
 		<canId>0CFFF048</canId>
 		<length>2</length>
 		<type>unsigned int</type>
 		<parameter>Rpm</parameter>
+		<max>30000</max>
+		<warning>RPMs are too high</warning>
 	</frame>
 	<frame>
 		<canId>0CFFF050</canId>
