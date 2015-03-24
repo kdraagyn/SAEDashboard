@@ -22,7 +22,7 @@ class dashRunner(tk.Tk):
 		tk.Tk.__init__(self, parent)
 		self.parent = parent # even though dashRunner is the parent of all gui elements
 		self.canvas = tk.Canvas(self, height=height, width=width)
-		self.canvas.configure(background="black")
+		self.canvas.configure(background="white")
 		self.canvas.grid()
 		self.canvas.pack()
 
@@ -56,6 +56,9 @@ class dashRunner(tk.Tk):
 
 	# method to take everything off the screen and display a warning message
 	def alert(self, label, message):
+		# remove previously viewable widgets
+		self.canvas.delete("all")
+
 		xloc = self.canvas.winfo_reqwidth() * (1 / 2)
 		xwidth = self.canvas.winfo_reqwidth() * (5 / 6)
 		yloc = self.canvas.winfo_reqheight() * (3 / 11)
