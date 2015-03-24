@@ -41,6 +41,8 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 		# subscribe is how you say "this gauge is going to need access to the rpm and barometer data" where rpm data is correlated to the 0CFFF048 id from the xml file
 		self.subscribe("0CFFF048") # rpm
 		self.subscribe("0CFFF148") # Barometer
+		self.subscribe("0CFFF050") # TPS
+		self.subscribe("0CFFF150") # map
 
 
 	# create will be run once and it is in charge of setting up the initial screen
@@ -60,9 +62,11 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 	def updateView(self, dataPack):
 		self.canvas.delete(self.rpmReference) # deletes the rpm text using the rpmReference id that is saved as a class variable
 		self.canvas.delete(self.barometerId)	# deletes the barometer text using the barometerId that is saved as a class variable
-		self.renderText(rpm=dataPack[0].data, barometer=dataPack[1].data)
+		self.canvas.delete(self.tpsId) 				# deletes the tps text using the tpsId that is saved a class variable
+		self.canvas.delete(self.mapId)				# deletes the map text using the tpsId that is saved a class variable
+		self.renderText(rpm=dataPack[0].data, barometer=dataPack[1].data, tps=dataPack[2].data, map=dataPack[3].data)
 
-	def renderText(self, rpm=0, barometer=0):
+	def renderText(self, rpm=0, barometer=0, tps=0, map=0):
 		# saves a reference to the created text element in rpmReference
 		self.rpmReference = self.canvas.create_text(self.xloc, self.yloc,anchor="nw", text="RPM: {0}".format(rpm)) # creates the text on the screen
 
@@ -73,3 +77,16 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 		# saves a reference to the barometer text element. xloc and yloc are NOT hard coded. Hard coding things is bad.
 		self.barometerId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight, anchor="nw", text="Barometer: {0}".format(barometer)) # creates the barometer text on the screen
 		
+		(barx1, bary1, barx2, bary2) = self.canvas.bbox(self.barometerId) #returns the bounding box of the rpm text box (upper left (x,y), lower right (x,y))
+		barwidth = barx2 - barx1
+		barHeight = bary2 - bary1
+
+		# saves a reference to the tps text element. xloc and yloc are NOT hard coded. Hard coding things is bad.
+		self.tpsId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight + barHeight, anchor="nw", text="TPS: {0}".format(tps)) # creates the barometer text on the screen
+
+		(tpsx1, tpsy1, tpsx2, tpsy2) = self.canvas.bbox(self.tpsId) #returns the bounding box of the rpm text box (upper left (x,y), lower right (x,y))
+		tpswidth = tpsx2 - tpsx1
+		tpsHeight = tpsy2 - tpsy1
+
+		# saves a reference to the tps text element. xloc and yloc are NOT hard coded. Hard coding things is bad.
+		self.mapId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight + barHeight + tpsHeight, anchor="nw", text="map: {0}".format(map)) # creates the barometer text on the screen

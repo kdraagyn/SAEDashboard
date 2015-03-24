@@ -47,7 +47,7 @@ class canStore(object):
 
 	def update(self):
 		for frame in self.frameDictionary:
-			msg = self.bus.recv()
+			msg = self.bus.recv(10)
 
 			ident = hex(msg.arbitration_id).replace('0x','').upper()
 			if(len(ident) == 7):

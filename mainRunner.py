@@ -63,7 +63,7 @@ class dashRunner(tk.Tk):
 			self.updateScreen()
 		except unsafeOperationException as e:
 			self.alert(e.warningMsg, e.unsafeFrame.parameter + ": \t{0}".format(e.unsafeFrame.data))
-		self.after(5, self.updateCAN)
+		self.after(10, self.updateCAN)
 
 	def updateScreen(self):
 		# update screen with the proper values from can bus
