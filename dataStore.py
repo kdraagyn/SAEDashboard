@@ -17,12 +17,11 @@ class canStore(object):
 			frame.type = xmlframe.findtext("type")
 
 			self.frameDictionary[frame.canId] = frame
-			print(len(self.frameDictionary))
 
-	def get(id):
+	def get(self, id):
 		return self.frameDictionary[id]
 
-	def updateData():
+	def update(self):
 		for frame in self.frameDictionary:
 			# update through can buss
 			pass
