@@ -82,9 +82,7 @@ class dashRunner(tk.Tk):
 
 	# method to take everything off the screen and display a warning message
 	def alert(self, label, message):
-		if(self.alertingException):
-			pass
-		else:
+		if(~self.alertingException):
 			self.alertingException = True
 			# remove previously viewable widgets
 			self.canvas.delete("all")
