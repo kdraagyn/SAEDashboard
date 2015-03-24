@@ -1,11 +1,18 @@
 import xml.etree.cElementTree as xmlreader
 from dashExceptions import *
+import can
+from can.interfaces.interface import Bus
 
 class canStore(object):
+	can_interface = 'vcan0' # sets up the can network it will listen to
+	filters = []
+
 	"""data structure and manager for all data in the program"""
 	def __init__(self):
+		
 		super(canStore, self).__init__()
 		self.frameDictionary = {}
+
 
 	def loadConfigXml(self, xmlPath):
 		ids = xmlreader.parse(xmlPath)
@@ -20,9 +27,12 @@ class canStore(object):
 				frame.max = int(xmlframe.findtext("max"))
 			if(xmlframe.findtext("warning") != None):
 				frame.warning = xmlframe.findtext("warning")
-			print(frame.max)
 
+			self.filters.append({'can_id':int(frame.canId,16), 'can_mask':0x1fffffff})
 			self.frameDictionary[frame.canId] = frame
+
+		# set up can bus interface
+		self.bus = Bus(self.can_interface)
 
 	def get(self, frameId):
 		if(frameId not in self.frameDictionary):
@@ -37,11 +47,17 @@ class canStore(object):
 
 	def update(self):
 		for frame in self.frameDictionary:
-			# TODO update through can bus
-			self.frameDictionary[frame].data += 50
-			if(self.frameDictionary[frame].max != None):
-				if(self.frameDictionary[frame].data > self.frameDictionary[frame].max):
-					raise unsafeOperationException(self.frameDictionary[frame])
+			msg = self.bus.recv()
+
+			ident = hex(msg.arbitration_id).replace('0x','').upper()
+			if(len(ident) == 7):
+				ident = '0' + ident
+			if(ident in self.frameDictionary):
+				self.frameDictionary[ident].data = int.from_bytes(msg.data, byteorder='little', signed=True)
+
+				if(self.frameDictionary[ident].max != None):
+					if(self.frameDictionary[ident].data > self.frameDictionary[ident].max):
+						raise unsafeOperationException(self.frameDictionary[ident])
 
 
 class canFrame(object):

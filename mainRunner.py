@@ -52,10 +52,6 @@ class dashRunner(tk.Tk):
 			# sets up for can bus to update every 10 milliseconds. So a refresh rate of at least 100 Hz
 			self.after(10, self.updateCAN)
 
-
-		# TODO: plug in the can bus
-
-
 	def reset(self):
 		# reset everything so init is called again in case an issue arises
 		pass

@@ -50,16 +50,26 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 		self.canvas = canvas
 		self.renderText()
 
+	# is called every time new data appears over the can bus
+	# 	the best way that I found to refresh a gauge is to use the ids thrown back after saved from the the create_[line, text, etc] and delete the element
+	# 	with that out of the way you can redraw the gauge with updated values
+	# 
+	# 	It is also easiest to have separate helper function (renderText in this case) that is in charge of drawing the gauge given different parameters
+	# 	This way there is any code duplication and everything is easier to manage. In general, if you ever use copy/paste your doing something wrong that will end up 
+	# 	making things harder for you. If you have any questions about how to structure some code just talk to me.
 	def updateView(self, dataPack):
-		self.canvas.delete(self.rpmReferance)
-		self.canvas.delete(self.barometerId)
+		self.canvas.delete(self.rpmReference) # deletes the rpm text using the rpmReference id that is saved as a class variable
+		self.canvas.delete(self.barometerId)	# deletes the barometer text using the barometerId that is saved as a class variable
 		self.renderText(rpm=dataPack[0].data, barometer=dataPack[1].data)
 
 	def renderText(self, rpm=0, barometer=0):
-		self.rpmReferance = self.canvas.create_text(self.xloc, self.yloc,anchor="nw", text="RPM: {0}".format(rpm))
+		# saves a reference to the created text element in rpmReference
+		self.rpmReference = self.canvas.create_text(self.xloc, self.yloc,anchor="nw", text="RPM: {0}".format(rpm)) # creates the text on the screen
 
-		(rpmx1, rpmy1, rpmx2, rpmy2) = self.canvas.bbox(self.rpmReferance) 
-		width = rpmx2 - rpmx1
+		(rpmx1, rpmy1, rpmx2, rpmy2) = self.canvas.bbox(self.rpmReference) #returns the bounding box of the rpm text box (upper left (x,y), lower right (x,y))
+		rpmwidth = rpmx2 - rpmx1
 		rpmHeight = rpmy2 - rpmy1
 
-		self.barometerId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight, anchor="nw", text="Barometer: {0}".format(barometer))
+		# saves a reference to the barometer text element. xloc and yloc are NOT hard coded. Hard coding things is bad.
+		self.barometerId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight, anchor="nw", text="Barometer: {0}".format(barometer)) # creates the barometer text on the screen
+		
