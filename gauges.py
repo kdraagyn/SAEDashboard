@@ -76,25 +76,27 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 	# this is the crap part lots of copy code... #itworks #doAsIsayAndNotAsIdo #hashTagsInCommentsWTF? #ImTired
 	def renderText(self, rpm=0, barometer=0, tps=0, map=0):
 		# saves a reference to the created text element in rpmReference
-		self.rpmReference = self.canvas.create_text(self.xloc, self.yloc,anchor="nw", text="RPM: {0}".format(rpm)) # creates the text on the screen
+		self.rpmReference = self.canvas.create_text(self.xloc, self.yloc,anchor="nw", font=(120), text="RPM: {0}".format(rpm)) # creates the text on the screen
 
 		(rpmx1, rpmy1, rpmx2, rpmy2) = self.canvas.bbox(self.rpmReference) #returns the bounding box of the rpm text box (upper left (x,y), lower right (x,y))
 		rpmwidth = rpmx2 - rpmx1
 		rpmHeight = rpmy2 - rpmy1
 
 		# saves a reference to the barometer text element. xloc and yloc are NOT hard coded. Hard coding things is bad.
-		self.barometerId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight, anchor="nw", text="Barometer: {0}".format(barometer)) # creates the barometer text on the screen
+		self.barometerId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight, anchor="nw", font=(120), text="Barometer: {0}".format(barometer)) # creates the barometer text on the screen
 		
 		(barx1, bary1, barx2, bary2) = self.canvas.bbox(self.barometerId) #returns the bounding box of the rpm text box (upper left (x,y), lower right (x,y))
 		barwidth = barx2 - barx1
 		barHeight = bary2 - bary1
 
 		# saves a reference to the tps text element. xloc and yloc are NOT hard coded. Hard coding things is bad.
-		self.tpsId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight + barHeight, anchor="nw", text="TPS: {0}".format(tps)) # creates the barometer text on the screen
+		self.tpsId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight + barHeight, anchor="nw", font=(120), text="TPS: {0}".format(tps)) # creates the barometer text on the screen
 
 		(tpsx1, tpsy1, tpsx2, tpsy2) = self.canvas.bbox(self.tpsId) #returns the bounding box of the rpm text box (upper left (x,y), lower right (x,y))
 		tpswidth = tpsx2 - tpsx1
 		tpsHeight = tpsy2 - tpsy1
 
 		# saves a reference to the tps text element. xloc and yloc are NOT hard coded. Hard coding things is bad.
-		self.mapId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight + barHeight + tpsHeight, anchor="nw", text="map: {0}".format(map)) # creates the barometer text on the screen
+		self.mapId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight + barHeight + tpsHeight, anchor="nw", font=(120), text="map: {0}".format(map)) # creates the barometer text on the screen
+
+# CODE EVERYTHING UNDER HERE

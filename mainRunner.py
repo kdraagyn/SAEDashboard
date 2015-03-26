@@ -67,6 +67,9 @@ class dashRunner(tk.Tk):
 
 	def updateScreen(self):
 		# update screen with the proper values from can bus
+		self.canvas.delete("all")
+		self.canvas.configure(background="white")
+
 		for widget in self.widgets:
 			try:
 				widgetPack = self.store.getPack(widget.getSubscriptions())

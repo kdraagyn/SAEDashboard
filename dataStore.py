@@ -2,6 +2,24 @@ import xml.etree.cElementTree as xmlreader
 from dashExceptions import *
 import can
 from can.interfaces.interface import Bus
+from multiprocessing import Process, Pipe
+
+# have to do fancy things with multiprocessing
+# hopefully this performs well on the beaglebone..
+def canListener(pipe):
+	data = {}
+	bus = Bus('vcan0')
+	while 1:
+		frame = bus.recv(timeout=0.005)
+		data[hex(frame.arbitration_id)] = frame.data
+
+		if(pipe.poll(timeout=0)):
+			# flush out the pipe from any flags for writing
+			while pipe.poll(timeout=0):
+				pipe.recv()
+			pipe.send(data)
+	pipe.close()
+	return # execution really should get here
 
 class canStore(object):
 	can_interface = 'vcan0' # sets up the can network it will listen to
@@ -12,6 +30,11 @@ class canStore(object):
 		
 		super(canStore, self).__init__()
 		self.frameDictionary = {}
+
+		# setup worker multiprocessing to listen to the can bus
+		self.parent, self.child = Pipe()
+		self.canWorker = Process(target=canListener, args=(self.child,))
+		self.canWorker.start()
 
 
 	def loadConfigXml(self, xmlPath):
@@ -46,15 +69,16 @@ class canStore(object):
 		return pack
 
 	def update(self):
-		for frame in self.frameDictionary:
-			msg = self.bus.recv(10)
+		# hand shake with canListener process to get data for all changing values
+		self.parent.send(True)
+		data = self.parent.recv()
 
-			ident = hex(msg.arbitration_id).replace('0x','').upper()
+		for msg in data:
+			ident = msg.replace('0x','').upper()
 			if(len(ident) == 7):
 				ident = '0' + ident
 			if(ident in self.frameDictionary):
-				self.frameDictionary[ident].data = int.from_bytes(msg.data, byteorder='little', signed=True)
-
+				self.frameDictionary[ident].data = int.from_bytes(data[msg], byteorder='little', signed=True)
 				if(self.frameDictionary[ident].max != None):
 					if(self.frameDictionary[ident].data > self.frameDictionary[ident].max):
 						raise unsafeOperationException(self.frameDictionary[ident])
