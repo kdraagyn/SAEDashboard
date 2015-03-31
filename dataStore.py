@@ -98,7 +98,6 @@ class RandomStore(CanStore):
 		# update all the can frames with random values
 		for frame in self.frameDictionary:
 			self.frameDictionary[frame].data = random.randint(0,30000)
-			print(self.frameDictionary[frame].data)
 		
 class canFrame(object):
 	"""PE3 ECU can frame struct"""
