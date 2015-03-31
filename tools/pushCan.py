@@ -4,6 +4,7 @@ import struct
 import sys
 import re
 from multiprocessing import Process, Queue
+from main.config import *
 
 # command to send all values
 # rpm 31000:27000 tps 1:3000 fuel_open_time 1:3000 ignition_angle 1:3000 barometer 1:3000 map 1:3000 lambda 1:3000 pressure_type 1:3000 analog1 1:3000 analog2 1:3000 analog3 1:3000 analog4 1:3000 analog5 1:3000 analog6 1:3000 analog7 1:3000 analog8 1:3000 frequency1 1:3000 frequency2 1:3000 frequency3 1:3000 frequency4 1:3000 battery_voltage 1:3000 air_temp 1:3000 coolant_temp 1:3000 temp_type 1:3000 analog5_thermistor 1:3000 analog7_thermistor 1:3000 version_major 1:3000 version_minor 1:3000 version_build 1:3000 tbd 1:3000 
@@ -42,7 +43,7 @@ param2id = {
 	'tbd': 218101336
 }
 
-can_interface = 'vcan0'
+can_interface = config.bus
 range_reg = "([0-9]+):([0-9]+)"
 range_pattern = re.compile(range_reg)
 
