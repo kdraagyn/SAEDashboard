@@ -35,6 +35,6 @@ class config(object):
 	# set to "True" whenever you need to work with the GUI, False whenever the can 
 	# 	bus should be used
 	guiDev = True
-#end
+# end
 
 	5. Now start editing gauges.py and widgetComiler.py to create custom gauges
