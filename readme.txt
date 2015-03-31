@@ -23,4 +23,18 @@ To install everything on a windows machine:
 	3. Download and install the pySerial library
 		https://pypi.python.org/pypi/pyserial/2.7
 
-	4. Now start editing gauges.py and widgetComiler.py to create custom gauges
+	4. Create a "config.py" file in the dashboard folder with these lines of code
+
+# start
+class config(object):
+	"""class that holds main program configuration data."""
+	configName = "canids.xml"
+	height = 720
+	width = 1280
+
+	# set to "True" whenever you need to work with the GUI, False whenever the can 
+	# 	bus should be used
+	guiDev = True
+#end
+
+	5. Now start editing gauges.py and widgetComiler.py to create custom gauges
