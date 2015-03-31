@@ -3,6 +3,7 @@ from dashExceptions import *
 import can
 from can.interfaces.interface import Bus
 from multiprocessing import Process, Pipe
+import random
 
 # have to do fancy things with multiprocessing
 # hopefully this performs well on the beaglebone..
@@ -21,20 +22,23 @@ def canListener(pipe):
 	pipe.close()
 	return # execution really should get here
 
-class canStore(object):
+class CanStore(object):
 	can_interface = 'vcan0' # sets up the can network it will listen to
 	filters = []
 
 	"""data structure and manager for all data in the program"""
 	def __init__(self):
 		
-		super(canStore, self).__init__()
+		super(CanStore, self).__init__()
 		self.frameDictionary = {}
 
 		# setup worker multiprocessing to listen to the can bus
 		self.parent, self.child = Pipe()
 		self.canWorker = Process(target=canListener, args=(self.child,))
 		self.canWorker.start()
+
+		# set up can bus interface
+		self.bus = Bus(self.can_interface)
 
 
 	def loadConfigXml(self, xmlPath):
@@ -53,9 +57,6 @@ class canStore(object):
 
 			self.filters.append({'can_id':int(frame.canId,16), 'can_mask':0x1fffffff})
 			self.frameDictionary[frame.canId] = frame
-
-		# set up can bus interface
-		self.bus = Bus(self.can_interface)
 
 	def get(self, frameId):
 		if(frameId not in self.frameDictionary):
@@ -83,7 +84,22 @@ class canStore(object):
 					if(self.frameDictionary[ident].data > self.frameDictionary[ident].max):
 						raise unsafeOperationException(self.frameDictionary[ident])
 
+class RandomStore(CanStore):
+	"""
+		RandomStore
 
+		same interface as CanStore though gets rid of the dependencies on 
+			the virtualized can bus interface
+	"""
+	def __init__(self):
+		self.frameDictionary = {}
+
+	def update(self):
+		# update all the can frames with random values
+		for frame in self.frameDictionary:
+			self.frameDictionary[frame].data = random.randint(0,30000)
+			print(self.frameDictionary[frame].data)
+		
 class canFrame(object):
 	"""PE3 ECU can frame struct"""
 	def __init__(self):

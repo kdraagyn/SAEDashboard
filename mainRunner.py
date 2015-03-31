@@ -1,13 +1,10 @@
 import tkinter as tk
 from tkinter import *
-from dataStore import canStore
+from dataStore import *
 from gauges import *
 from dashExceptions import *
 from widgetCompiler import * 
-
-configName = "canids.xml"
-height = 720
-width = 1280
+from config import *
 
 """
 	dashRunner is in charge of:
@@ -27,16 +24,19 @@ class dashRunner(tk.Tk):
 		# setup tkinter
 		tk.Tk.__init__(self, parent)
 		self.parent = parent # even though dashRunner is the parent of all gui elements
-		self.canvas = tk.Canvas(self, height=height, width=width)
+		self.canvas = tk.Canvas(self, height=config.height, width=config.width)
 		self.canvas.configure(background="white")
 		self.canvas.grid()
 
 		# figure out all indexes and frames to read
 		# load in the xml with all the can ids and can frame configuration data
-		self.store = canStore()
+		if(config.guiDev):
+			self.store = RandomStore() # random numbers
+		else:
+			self.store = CanStore() # production
 		
 		try:
-			self.store.loadConfigXml(configName)
+			self.store.loadConfigXml(config.configName)
 		except FileNotFoundError as f:
 			self.alert("Initialization Error!", "FileNotFoundError: configuration name \"" + configName +"\" is incorrect")
 		
