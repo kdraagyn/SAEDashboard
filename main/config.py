@@ -9,11 +9,11 @@ class programConfig(object):
 	width = 1280
 
 	# GUI constants
-	barColor = "dark green"
+	barColor = "green"
 	fontName = "Helvetica"
-	fontColor = "pale green"
+	fontColor = "black"
 
 	warningFontName = "Helvetica"
 	warningBackColor = "red"
 
-	backgroundColor = "black"
+	backgroundColor = "white"

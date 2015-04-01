@@ -113,7 +113,7 @@ class canFrame(object):
 		self.parameter = ""
 		self.length = 0
 		self.type = ""
-		self.data = 200
+		self.data = 0
 		self.max = None
 		self.warning = None
 		self.min = None
