@@ -23,6 +23,8 @@
 		<length>2</length>
 		<type>signed int</type>
 		<parameter>TPS</parameter>
+		<max>30000</max>
+		<warning>TPS are too high</warning>
 	</frame>
 	<frame>
 		<canId>0CFFF052</canId>
@@ -137,6 +139,8 @@
 		<length>2</length>
 		<type>signed int</type>
 		<parameter>Battery Voltage</parameter>
+		<max>15</max>
+		<warning>Battery voltage are too high</warning>
 	</frame>
 	<frame>
 		<canId>0CFFF550</canId>
