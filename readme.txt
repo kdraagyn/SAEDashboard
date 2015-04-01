@@ -23,18 +23,20 @@ To install everything on a windows machine:
 	3. Download and install the pySerial library
 		https://pypi.python.org/pypi/pyserial/2.7
 
-	4. Create a "config.py" file in the dashboard folder with these lines of code
+	4. Create a "dev.py" file in the dashboard folder with these lines of code:
 
-# start
-class config(object):
-	"""class that holds main program configuration data."""
-	configName = "canids.xml"
-	height = 720
-	width = 1280
-
-	# set to "True" whenever you need to work with the GUI, False whenever the can 
-	# 	bus should be used
+#----start-----#
+class environment:
+	# set to "True" whenever you need to work with the GUI and random numbers should be generated
+	# set to "False" whenever the can bus should be read
 	guiDev = True
-# end
+
+	# set interface to listen to for can messages
+	# 	vcan0: 	used for dev on linux and for development
+	#		can0:		used for actual hardware messages and the production configuration
+	bus = "vcan0"
+#------end------#
+
+		This file only tells the program to generate random values instead of reading values from a can bus.
 
 	5. Now start editing gauges.py and widgetComiler.py to create custom gauges

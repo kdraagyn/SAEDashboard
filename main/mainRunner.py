@@ -4,7 +4,8 @@ from dataStore import *
 from gauges import *
 from dashExceptions import *
 from widgetCompiler import * 
-from config import *
+from config import programConfig
+from environmentConfig import environment as env
 
 """
 	dashRunner is in charge of:
@@ -24,21 +25,21 @@ class dashRunner(tk.Tk):
 		# setup tkinter
 		tk.Tk.__init__(self, parent)
 		self.parent = parent # even though dashRunner is the parent of all gui elements
-		self.canvas = tk.Canvas(self, height=config.height, width=config.width)
-		self.canvas.configure(background=config.backgroundColor)
+		self.canvas = tk.Canvas(self, height=programConfig.height, width=programConfig.width)
+		self.canvas.configure(background=programConfig.backgroundColor)
 		self.canvas.grid()
 
 		# figure out all indexes and frames to read
 		# load in the xml with all the can ids and can frame configuration data
-		if(config.guiDev):
+		if(env.guiDev):
 			self.store = RandomStore() # random numbers
 		else:
 			self.store = CanStore() # production
 		
 		try:
-			self.store.loadConfigXml(config.framesFileDeclaration)
+			self.store.loadConfigXml(programConfig.framesFileDeclaration)
 		except FileNotFoundError as f:
-			self.alert("Initialization Error!", "FileNotFoundError: configuration name \"" + config.framesFileDeclaration +"\" is incorrect")
+			self.alert("Initialization Error!", "FileNotFoundError: configuration name \"" + programConfig.framesFileDeclaration +"\" is incorrect")
 		
 		if(self.alertingException):
 			pass
@@ -68,7 +69,7 @@ class dashRunner(tk.Tk):
 	def updateScreen(self):
 		# update screen with the proper values from can bus
 		self.canvas.delete("all")
-		self.canvas.configure(background=config.backgroundColor)
+		self.canvas.configure(background=programConfig.backgroundColor)
 
 		for widget in self.widgets:
 			try:
@@ -92,11 +93,11 @@ class dashRunner(tk.Tk):
 			messageWidth = xwidth * (3 / 5)
 
 			self.canvas.configure(background="red")
-			labelref = self.canvas.create_text(xloc, yloc, anchor="n", width=xwidth, text=label, font=(config.warningFontName, 72, "bold"))
+			labelref = self.canvas.create_text(xloc, yloc, anchor="n", width=xwidth, text=label, font=(programConfig.warningFontName, 72, "bold"))
 
 			(labelx1, labely1, labelx2, labely2) = self.canvas.bbox(labelref)
 
-			self.canvas.create_text(xloc, yloc + (labely2 - labely1) + 20, text=message, font=(config.warningFontName, 16))
+			self.canvas.create_text(xloc, yloc + (labely2 - labely1) + 20, text=message, font=(programConfig.warningFontName, 16))
 			Label(self, text=message, fg="black")
 
 # Start Application

@@ -4,13 +4,13 @@ import can
 from can.interfaces.interface import Bus
 from multiprocessing import Process, Pipe
 import random
-from config import *
+from environmentConfig import environment as env
 
 # have to do fancy things with multiprocessing
 # hopefully this performs well on the beaglebone..
 def canListener(pipe):
 	data = {}
-	bus = Bus(config.bus)
+	bus = Bus(env.bus)
 	while 1:
 		frame = bus.recv(timeout=0.005)
 		data[hex(frame.arbitration_id)] = frame.data
@@ -24,7 +24,7 @@ def canListener(pipe):
 	return # execution really should get here
 
 class CanStore(object):
-	can_interface = config.bus # sets up the can network it will listen to
+	can_interface = env.bus # sets up the can network it will listen to
 	filters = []
 
 	"""data structure and manager for all data in the program"""
