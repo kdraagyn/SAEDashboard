@@ -38,11 +38,12 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 	# init will run when you first add it to the widget compiler
 	# 	this is were you setup which ids you will use
 	# 	ids are the same ids as in the ids.xml and they correlate with a piece of data. This also can be seen from the .xml
-	def __init__(self, x, y, *subscriptions):
+	def __init__(self, x, y, *subscriptions, fontSize=12):
 		super(textGauge, self).__init__()
 		# set gauge view x and y location
 		self.xloc = x
 		self.yloc = y
+		self.fontSize = fontSize
 
 		# subscribe is how you say "this gauge is going to need access to the rpm and barometer data" where rpm data is correlated to the 0CFFF048 id from the xml file
 		for subscription in subscriptions:
@@ -77,7 +78,7 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 		# loop through data pack and create all the text elements
 		for pack in dataPack:
 			# saves reference to the created text element in refDictionary
-			self.elementRef[pack.canId] = self.canvas.create_text(self.xloc, self.yloc + pasty, anchor="e", font=("Times", 12, ), text="{0}: {1}".format(pack.parameter, pack.data))
+			self.elementRef[pack.canId] = self.canvas.create_text(self.xloc, self.yloc + pasty, anchor="e", font=("Times", self.fontSize, ), text="{0}: {1}".format(pack.parameter, pack.data))
 
 			(pastx1, pasty1, pastx2, pasty2) = self.canvas.bbox(self.elementRef[pack.canId])
 			pastHeight = pasty2 - pasty1
