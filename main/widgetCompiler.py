@@ -1,4 +1,5 @@
 from gauges import *
+
 def compileGauges():
 	gauges = [] 
 
@@ -6,7 +7,7 @@ def compileGauges():
 	# declaring just means gauges.append("name of gauge class you write"())
 	#
 	# your code starts here
-	gauges.append(textGauge())
+	gauges.append(textGauge(100, 0))
 
 	# your code stops here
 

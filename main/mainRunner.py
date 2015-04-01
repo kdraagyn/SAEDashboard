@@ -36,9 +36,9 @@ class dashRunner(tk.Tk):
 			self.store = CanStore() # production
 		
 		try:
-			self.store.loadConfigXml(config.configName)
+			self.store.loadConfigXml(config.framesFileDeclaration)
 		except FileNotFoundError as f:
-			self.alert("Initialization Error!", "FileNotFoundError: configuration name \"" + configName +"\" is incorrect")
+			self.alert("Initialization Error!", "FileNotFoundError: configuration name \"" + config.framesFileDeclaration +"\" is incorrect")
 		
 		if(self.alertingException):
 			pass

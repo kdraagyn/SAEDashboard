@@ -44,12 +44,44 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 	# init will run when you first add it to the widget compiler
 	# 	this is were you setup which ids you will use
 	# 	ids are the same ids as in the ids.xml and they correlate with a piece of data. This also can be seen from the .xml
-	def __init__(self):
+	def __init__(self, x, y):
+		# set gauge view x and y location
+		self.xloc = x
+		self.yloc = y
+
 		# subscribe is how you say "this gauge is going to need access to the rpm and barometer data" where rpm data is correlated to the 0CFFF048 id from the xml file
 		self.subscribe("0CFFF048") # rpm
 		self.subscribe("0CFFF148") # Barometer
 		self.subscribe("0CFFF050") # TPS
 		self.subscribe("0CFFF150") # map
+		self.subscribe("0CFFF052") # Fuel Open Time
+		self.subscribe("0CFFF054") # Ignition Angle
+		self.subscribe("0CFFF152") # Lambda
+		self.subscribe("0CFFF154") # Pressure Type
+		self.subscribe("0CFFF248") # Analog Input 1
+		self.subscribe("0CFFF250") # Analog Input 2
+		self.subscribe("0CFFF252") # Analog Input 3
+		self.subscribe("0CFFF254") # Analog Input 4
+		self.subscribe("0CFFF348") # Analog Input 5
+		self.subscribe("0CFFF350") # Analog Input 6
+		self.subscribe("0CFFF352") # Analog Input 7
+		self.subscribe("0CFFF354") # Analog Input 8
+		self.subscribe("0CFFF448") # Frequency 1
+		self.subscribe("0CFFF450") # Frequency 2
+		self.subscribe("0CFFF452") # Frequency 3
+		self.subscribe("0CFFF454") # Frequency 4
+		self.subscribe("0CFFF548") # Battery Voltage
+		self.subscribe("0CFFF550") # Air Temp
+		self.subscribe("0CFFF552") # Coolant Temp
+		self.subscribe("0CFFF554") # Temp Type
+		self.subscribe("0CFFF648") # Analog Input 5 - Thermistor
+		self.subscribe("0CFFF650") # Analog Input 6 - Thermistor
+		self.subscribe("0CFFF652") # Version Major
+		self.subscribe("0CFFF654") # Version Minor
+		self.subscribe("0CFFF656") # Version Build
+		self.subscribe("0CFFF658") # TBD
+
+		self.elementRef = {};
 
 
 	# create will be run once and it is in charge of setting up the initial screen
@@ -57,7 +89,6 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 	# 	that way it is much easier to move everything around when we are getting the final look
 	def create(self, canvas):
 		self.canvas = canvas
-		self.renderText()
 
 	# is called every time new data appears over the can bus
 	# 	the best way that I found to refresh a gauge is to use the ids thrown back after saved from the the create_[line, text, etc] and delete the element
@@ -67,36 +98,27 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 	# 	This way there is any code duplication and everything is easier to manage. In general, if you ever use copy/paste your doing something wrong that will end up 
 	# 	making things harder for you. If you have any questions about how to structure some code just talk to me.
 	def updateView(self, dataPack):
-		self.canvas.delete(self.rpmReference) # deletes the rpm text using the rpmReference id that is saved as a class variable
-		self.canvas.delete(self.barometerId)	# deletes the barometer text using the barometerId that is saved as a class variable
-		self.canvas.delete(self.tpsId) 				# deletes the tps text using the tpsId that is saved a class variable
-		self.canvas.delete(self.mapId)				# deletes the map text using the tpsId that is saved a class variable
-		self.renderText(rpm=dataPack[0].data, barometer=dataPack[1].data, tps=dataPack[2].data, map=dataPack[3].data)
+		for pack in dataPack:
+			if(pack.canId in self.elementRef): self.canvas.delete(self.elementRef[pack.canId])
+
+		self.renderText(dataPack)
 
 	# this is the crap part lots of copy code... #itworks #doAsIsayAndNotAsIdo #hashTagsInCommentsWTF? #ImTired
-	def renderText(self, rpm=0, barometer=0, tps=0, map=0):
+	def renderText(self, dataPack):
+		pasty = 0
+
+		for pack in dataPack:
+			# saves reference to the created text element in refDictionary
+			self.elementRef[pack.canId] = self.canvas.create_text(self.xloc, self.yloc + pasty, anchor="nw", font=(120), text="{0}: {1}".format(pack.parameter, pack.data))
+
+			(pastx1, pasty1, pastx2, pasty2) = self.canvas.bbox(self.elementRef[pack.canId])
+
+			pastWidth = pastx2 - pastx1
+			pastHeight = pasty2 - pasty1
+
+			pasty += pastHeight
+
 		# saves a reference to the created text element in rpmReference
-		self.rpmReference = self.canvas.create_text(self.xloc, self.yloc,anchor="nw", font=(120), text="RPM: {0}".format(rpm)) # creates the text on the screen
-
-		(rpmx1, rpmy1, rpmx2, rpmy2) = self.canvas.bbox(self.rpmReference) #returns the bounding box of the rpm text box (upper left (x,y), lower right (x,y))
-		rpmwidth = rpmx2 - rpmx1
-		rpmHeight = rpmy2 - rpmy1
-
-		# saves a reference to the barometer text element. xloc and yloc are NOT hard coded. Hard coding things is bad.
-		self.barometerId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight, anchor="nw", font=(120), text="Barometer: {0}".format(barometer)) # creates the barometer text on the screen
-		
-		(barx1, bary1, barx2, bary2) = self.canvas.bbox(self.barometerId) #returns the bounding box of the rpm text box (upper left (x,y), lower right (x,y))
-		barwidth = barx2 - barx1
-		barHeight = bary2 - bary1
-
-		# saves a reference to the tps text element. xloc and yloc are NOT hard coded. Hard coding things is bad.
-		self.tpsId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight + barHeight, anchor="nw", font=(120), text="TPS: {0}".format(tps)) # creates the barometer text on the screen
-
-		(tpsx1, tpsy1, tpsx2, tpsy2) = self.canvas.bbox(self.tpsId) #returns the bounding box of the rpm text box (upper left (x,y), lower right (x,y))
-		tpswidth = tpsx2 - tpsx1
-		tpsHeight = tpsy2 - tpsy1
-
-		# saves a reference to the tps text element. xloc and yloc are NOT hard coded. Hard coding things is bad.
-		self.mapId = self.canvas.create_text(self.xloc, self.yloc + rpmHeight + barHeight + tpsHeight, anchor="nw", font=(120), text="map: {0}".format(map)) # creates the barometer text on the screen
+		# self.rpmReference = self.canvas.create_text(self.xloc, self.yloc,anchor="nw", font=(120), text="RPM: {0}".format(rpm)) # creates the text on the screen
 
 # CODE EVERYTHING UNDER HERE
