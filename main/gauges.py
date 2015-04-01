@@ -117,7 +117,7 @@ class circularGauge(gauge):
 				self.xloc + self.width, 
 				self.yloc + self.height, 
 				style=tk.PIESLICE, 
-				fill=self.color, 
+				fill=self.color,
 				start=-180 + self.startAngle,
 				extent=-(pack.data / pack.max * (endAngle - startAngle)))
 
