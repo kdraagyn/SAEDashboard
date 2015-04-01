@@ -17,6 +17,7 @@
 		<parameter>Rpm</parameter>
 		<max>30000</max>
 		<warning>RPMs are too high</warning>
+		<min>0</min>
 	</frame>
 	<frame>
 		<canId>0CFFF050</canId>
@@ -25,6 +26,7 @@
 		<parameter>TPS</parameter>
 		<max>30000</max>
 		<warning>TPS are too high</warning>
+		<min>0</min>
 	</frame>
 	<frame>
 		<canId>0CFFF052</canId>
@@ -140,7 +142,8 @@
 		<type>signed int</type>
 		<parameter>Battery Voltage</parameter>
 		<max>15</max>
-		<warning>Battery voltage are too high</warning>
+		<warning>Battery voltage is too high</warning>
+		<min>10</min>
 	</frame>
 	<frame>
 		<canId>0CFFF550</canId>

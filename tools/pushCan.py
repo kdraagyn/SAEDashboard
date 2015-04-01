@@ -70,6 +70,8 @@ def canWriter(canId, value):
 		pushCan(canId, int(value))
 	return True
 
+
+# main loop
 while True:
 	processes = []
 	results = Queue()

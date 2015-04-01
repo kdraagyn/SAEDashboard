@@ -38,12 +38,14 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 	# init will run when you first add it to the widget compiler
 	# 	this is were you setup which ids you will use
 	# 	ids are the same ids as in the ids.xml and they correlate with a piece of data. This also can be seen from the .xml
-	def __init__(self, x, y, *subscriptions, fontSize=12):
+	def __init__(self, x, y, *subscriptions, fontSize=12, font="Times", fontcolor="black"):
 		super(textGauge, self).__init__()
 		# set gauge view x and y location
 		self.xloc = x
 		self.yloc = y
 		self.fontSize = fontSize
+		self.font = font
+		self.fontcolor = fontcolor
 
 		# subscribe is how you say "this gauge is going to need access to the rpm and barometer data" where rpm data is correlated to the 0CFFF048 id from the xml file
 		for subscription in subscriptions:
@@ -78,46 +80,50 @@ class textGauge(gauge): # the class must inherit (i.e the "gauge" within the par
 		# loop through data pack and create all the text elements
 		for pack in dataPack:
 			# saves reference to the created text element in refDictionary
-			self.elementRef[pack.canId] = self.canvas.create_text(self.xloc, self.yloc + pasty, anchor="e", font=("Times", self.fontSize, ), text="{0}: {1}".format(pack.parameter, pack.data))
+			self.elementRef[pack.canId] = self.canvas.create_text(self.xloc, self.yloc + pasty, fill=self.fontcolor, anchor="e", font=(self.font, self.fontSize, ), text="{0}: {1}".format(pack.parameter, pack.data))
 
 			(pastx1, pasty1, pastx2, pasty2) = self.canvas.bbox(self.elementRef[pack.canId])
 			pastHeight = pasty2 - pasty1
 			pasty += pastHeight
 
+# Circular Gauge view that displays gauge value around a circle
 class circularGauge(gauge):
-	def __init__(self, x, y, width, height, *subscriptions, startAngle=0):
+	def __init__(self, x, y, width, height, subscription, startAngle=0, color="black", font="Times", fontcolor = "black"):
 		super(circularGauge, self).__init__()
-		for subscription in subscriptions:
-			self.subscribe(subscription)
+		self.subscribe(subscription)
 
 		self.xloc = x
 		self.yloc = y
 		self.width = width
 		self.height = height
 		self.startAngle = startAngle
-		self.elementRef = []
+		self.color = color
+		self.font = font
+		self.fontcolor = fontcolor
 
 	def create(self, canvas):
 		self.canvas = canvas
 
 	def updateView(self, dataPack):
+		# clean up view
+
 		for pack in dataPack:
 			startAngle = -180 + self.startAngle
 			endAngle = 180 - self.startAngle
 
 			# Main display circular gauge
-			self.elementRef.append(self.canvas.create_arc(self.xloc, 
+			self.canvas.create_arc(self.xloc, 
 				self.yloc, 
 				self.xloc + self.width, 
 				self.yloc + self.height, 
 				style=tk.PIESLICE, 
-				fill="green", 
+				fill=self.color, 
 				start=-180 + self.startAngle,
-				extent=-(pack.data / pack.max * (endAngle - startAngle))))
+				extent=-(pack.data / pack.max * (endAngle - startAngle)))
 
 			# "eraser" gauge
 			eraserbuffer = self.width / 10
-			self.elementRef.append(self.canvas.create_arc(self.xloc + eraserbuffer, 
+			self.canvas.create_arc(self.xloc + eraserbuffer, 
 				self.yloc + eraserbuffer, 
 				self.xloc + self.width - eraserbuffer, 
 				self.yloc + self.height - eraserbuffer, 
@@ -125,14 +131,110 @@ class circularGauge(gauge):
 				fill=self.canvas["background"], 
 				start= -self.startAngle,
 				extent= endAngle - startAngle - 30,
-				outline=self.canvas["background"]))
+				outline=self.canvas["background"])
 
-			self.elementRef.append(self.canvas.create_text(self.xloc + self.width / 2, self.yloc + self.height / 3, 
-				font=("Helvetica", int(150 * self.width / int(self.canvas["width"])), "bold"), 
-				text="{0}".format(pack.data).upper()))
+			self.canvas.create_text(self.xloc + self.width / 2, self.yloc + self.height / 3, 
+				font=(self.font, int(150 * self.width / int(self.canvas["width"])),), 
+				fill=self.fontcolor,
+				text="{0}".format(pack.data).upper())
 
-			self.elementRef.append(self.canvas.create_text(self.xloc + self.width / 2, self.yloc + 4 * self.height / 9,
-				font=("Helvetica", int(75 * self.width / int(self.canvas["width"])), "bold"),
-				text="{0}".format(pack.parameter).upper()))
+			self.canvas.create_text(self.xloc + self.width / 2, self.yloc + 4 * self.height / 9,
+				font=(self.font, int(75 * self.width / int(self.canvas["width"])), "bold"),
+				fill=self.fontcolor,
+				text="{0}".format(pack.parameter).upper())
 
+class barGauge(gauge):
+	HORIZONTAL = 0
+	VERTICAL = 1
+
+	def __init__(self, x, y, width, height, *subscriptions, orientation=HORIZONTAL, padding=10, color="black", font="Times", fontcolor="black"):
+		super(barGauge, self).__init__()
+		for subscription in subscriptions:
+			self.subscribe(subscription)
+
+		self.xloc = x
+		self.yloc = y
+		self.width = width
+		self.height = height
+		self.orientation = orientation
+		self.padding = padding
+		self.color = color
+		self.font = font
+		self.fontcolor = fontcolor
+
+	def create(self, canvas):
+		self.canvas = canvas
+
+	def updateView(self, dataPack):
+		pastx = self.xloc
+		pasty = self.yloc
+
+		for pack in dataPack:
+			# create container rectangle
+			if(self.orientation == self.HORIZONTAL):
+				labelId = self.canvas.create_text(
+					pastx, 
+					pasty + self.height / 2,
+					fill=self.fontcolor,
+					anchor="w", 
+					font=(self.font, int(self.height * (1/2)), "bold"), 
+					text="{0}".format(pack.parameter))
+
+				(labelx1, labely1, labelx2, labely2) = self.canvas.bbox(labelId)
+				labelWidth = labelx2 - labelx1
+
+				self.canvas.create_rectangle(
+					pastx + labelWidth,
+					pasty, 
+					pastx + self.width, 
+					pasty + self.height)
+				
+				self.canvas.create_rectangle(
+					pastx + labelWidth, 
+					pasty, 
+					pastx + labelWidth + ((self.width - labelWidth) * pack.data / pack.max), 
+					pasty + self.height,
+					fill = self.color)
+
+				self.canvas.create_text(
+					pastx + labelWidth, 
+					pasty + self.height * 1/2,
+					fill=self.fontcolor, 
+					anchor="w", 
+					font=(self.font, int(self.height * (1/2)),), 
+					text="{0}".format(pack.data))
+
+				pasty += self.height + self.padding
+			elif(self.orientation == self.VERTICAL):
+				labelId = self.canvas.create_text(
+					pastx + self.width / 2, 
+					pasty + self.height, 
+					fill=self.fontcolor,
+					anchor="s", 
+					font=(self.font, int(self.width * (1/2)), "bold"), 
+					text="{0}".format(pack.parameter))
+
+				(labelx1, labely1, labelx2, labely2) = self.canvas.bbox(labelId)
+				labelHeight = labely2 - labely1
+
+				dataId = self.canvas.create_text(
+					pastx + self.width / 2,
+					pasty, 
+					fill=self.fontcolor,
+					anchor="s", 
+					font=(self.font, int(self.width * (3/7)),), 
+					text="{0}".format(pack.data))
+
+				self.canvas.create_rectangle(
+					pastx, 
+					pasty, 
+					pastx + self.width, 
+					pasty + self.height - labelHeight)
+				self.canvas.create_rectangle(
+					pastx, 
+					pasty + ((self.height - labelHeight) * (pack.max - pack.data) / pack.max), 
+					pastx + self.width, 
+					pasty + self.height - labelHeight,
+					fill=self.color)
+				pastx += 2 * self.width + self.padding
 # CODE EVERYTHING UNDER HERE

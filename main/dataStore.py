@@ -55,6 +55,8 @@ class CanStore(object):
 				frame.max = int(xmlframe.findtext("max"))
 			if(xmlframe.findtext("warning") != None):
 				frame.warning = xmlframe.findtext("warning")
+			if(xmlframe.findtext("min") != None):
+				frame.min = xmlframe.findtext("min")
 
 			self.filters.append({'can_id':int(frame.canId,16), 'can_mask':0x1fffffff})
 			self.frameDictionary[frame.canId] = frame
@@ -98,7 +100,10 @@ class RandomStore(CanStore):
 	def update(self):
 		# update all the can frames with random values
 		for frame in self.frameDictionary:
-			self.frameDictionary[frame].data = random.randint(0,30000)
+			if(self.frameDictionary[frame].max != None):
+				self.frameDictionary[frame].data = random.randint(0,self.frameDictionary[frame].max)
+			else:
+				self.frameDictionary[frame].data = random.randint(0,30000)
 		
 class canFrame(object):
 	"""PE3 ECU can frame struct"""
@@ -111,3 +116,4 @@ class canFrame(object):
 		self.data = 200
 		self.max = None
 		self.warning = None
+		self.min = None
