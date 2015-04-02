@@ -147,7 +147,7 @@ class barGauge(gauge):
 	HORIZONTAL = 0
 	VERTICAL = 1
 
-	def __init__(self, x, y, width, height, *subscriptions, orientation=HORIZONTAL, padding=10, color="black", font="Times", fontcolor="black"):
+	def __init__(self, x, y, width, height, *subscriptions, orientation=HORIZONTAL, padding=5, color="black", font="Times", fontcolor="black"):
 		super(barGauge, self).__init__()
 		for subscription in subscriptions:
 			self.subscribe(subscription)
@@ -173,31 +173,28 @@ class barGauge(gauge):
 			# create container rectangle
 			if(self.orientation == self.HORIZONTAL):
 				labelId = self.canvas.create_text(
-					pastx, 
+					pastx - self.padding / 2, 
 					pasty + self.height / 2,
 					fill=self.fontcolor,
-					anchor="w", 
-					font=(self.font, int(self.height * (1/2)), "bold"), 
+					anchor="e", 
+					font=(self.font, int(self.height * (1/3)), "bold"), 
 					text="{0}".format(pack.parameter))
 
-				(labelx1, labely1, labelx2, labely2) = self.canvas.bbox(labelId)
-				labelWidth = labelx2 - labelx1
-
 				self.canvas.create_rectangle(
-					pastx + labelWidth,
+					pastx,
 					pasty, 
 					pastx + self.width, 
 					pasty + self.height)
 				
 				self.canvas.create_rectangle(
-					pastx + labelWidth, 
+					pastx, 
 					pasty, 
-					pastx + labelWidth + ((self.width - labelWidth) * pack.data / pack.max), 
+					pastx + (self.width * pack.data / pack.max), 
 					pasty + self.height,
 					fill = self.color)
 
 				self.canvas.create_text(
-					pastx + labelWidth, 
+					pastx, 
 					pasty + self.height * 1/2,
 					fill=self.fontcolor, 
 					anchor="w", 
@@ -211,7 +208,7 @@ class barGauge(gauge):
 					pasty + self.height, 
 					fill=self.fontcolor,
 					anchor="s", 
-					font=(self.font, int(self.width * (1/2)), "bold"), 
+					font=(self.font, int(self.width * (1/3)), "bold"), 
 					text="{0}".format(pack.parameter))
 
 				(labelx1, labely1, labelx2, labely2) = self.canvas.bbox(labelId)

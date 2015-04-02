@@ -45,7 +45,7 @@ def compileGauges():
 		"0CFFF654", "0CFFF652", "0CFFF650", "0CFFF648", "0CFFF554", "0CFFF552", "0CFFF550", fontSize=10, fontcolor=programConfig.fontColor))
 	gauges.append(textGauge(1070, 10, "0CFFF548", "0CFFF454", "0CFFF452", "0CFFF450", "0CFFF448", "0CFFF354",
 	"0CFFF352", "0CFFF350", "0CFFF348", "0CFFF254", "0CFFF252", "0CFFF250", "0CFFF248", fontSize=10, fontcolor=programConfig.fontColor))
-	gauges.append(barGauge(530, 500, 250, 50, "0CFFF048", "0CFFF054", padding=20, color=programConfig.barColor, fontcolor=programConfig.fontColor))
+	gauges.append(barGauge(540, 550, 250, 50, "0CFFF048", "0CFFF054", padding=20, color=programConfig.barColor, fontcolor=programConfig.fontColor))
 	gauges.append(barGauge(50,100, 50, 250, "0CFFF552", "0CFFF050", orientation=barGauge.VERTICAL, padding=20, color=programConfig.barColor, fontcolor=programConfig.fontColor))
 	# your code stops here
 
