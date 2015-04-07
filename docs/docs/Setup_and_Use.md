@@ -108,4 +108,56 @@
 			# environment type 
 			envType = DEV
 
+#Project File Structure
+	  main/
+	      canids.xml
+	      config.py
+	      dashExceptions.py
+	      dataStore.py
+	      enviromentConfig.py
+	      gauges.py
+	      mainRunner.py
+	      Wid
+	  tools/
+	  		can0.sh
+	  		pushCan.py
+	  		vcan0.sh
+	  .gitignore    # git ignore file for use by git repository
+	  restart.py
+	  updateBeagleBone.py
+
 #Running the Environment
+
+###Environment Config 
+When a script is run, the environmentConfig class is used to aid in development control how the application acts 
+
+- <strong>guiDev</strong>: Used to help with gui dev on windows environments get rid of the need for a can bus in gui design
+	
+	- True: Random value generation
+
+	- False: Listens to CAN bus for values
+
+- <strong>bus</strong>: system name of the can bus network to listen to
+
+- <strong>framesFileDeclaration</strong>: conids.xml location
+
+- <strong>envType</strong>: environment type controls what programs get restarted when restart.py is run. This is only run by the beaglebone whenever the beaglebone is updated and restarted
+
+	- <strong>DEV</strong>: both GUI and pushCan are restarted 
+
+	- <strong>GUI</strong>: only GUI main runner is restarted
+
+	- <strong>PUSH</strong>: only CAN pusher program is restarted
+
+###Run the GUI application
+	
+In the main/ directory run the main runner python script:
+
+	python3.4 mainRunner.py
+
+###Run the ECU can simulator
+	
+In the root directory run the pushCan python script as a module:
+
+	python3.4 -m tools.pushCan
+
