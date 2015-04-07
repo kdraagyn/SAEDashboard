@@ -24,9 +24,9 @@ class dashRunner(tk.Tk):
 		self.alertingException = False
 		# setup tkinter
 		tk.Tk.__init__(self, parent)
-		self.overrideredirect(True)
-		self.geometry(("{0}x{1}+0+0".format(self.winfo_screenwidth(),self.winfo_screenheight())))
-		
+		# self.overrideredirect(True)
+		# self.geometry(("{0}x{1}+0+0".format(self.winfo_screenwidth(),self.winfo_screenheight())))
+
 		self.parent = parent # even though dashRunner is the parent of all gui elements
 		self.canvas = tk.Canvas(self, height=programConfig.height, width=programConfig.width)
 		self.canvas.configure(background=programConfig.backgroundColor)

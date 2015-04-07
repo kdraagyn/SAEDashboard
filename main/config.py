@@ -6,11 +6,12 @@ class programConfig(object):
 	width = 1280
 
 	# GUI constants
-	barColor = "purple3"
+	barColor = "purple1"
 	fontName = "Helvetica"
 	fontColor = "cornsilk3"
+	# fontColor = "grey25"
 
 	warningFontName = "Helvetica"
-	warningBackColor = "red"
+	warningBackColor = "blue"
 
 	backgroundColor = "grey8"

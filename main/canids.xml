@@ -15,7 +15,7 @@
 		<length>2</length>
 		<type>unsigned int</type>
 		<parameter>Rpm</parameter>
-		<max>30000</max>
+		<max>14500</max>
 		<warning>RPMs are too high</warning>
 		<min>0</min>
 	</frame>
@@ -24,7 +24,7 @@
 		<length>2</length>
 		<type>signed int</type>
 		<parameter>TPS</parameter>
-		<max>30000</max>
+		<max>100</max>
 		<warning>TPS are too high</warning>
 		<min>0</min>
 	</frame>
