@@ -21,7 +21,7 @@ def canListener(pipe):
 				pipe.recv()
 			pipe.send(data)
 	pipe.close()
-	return # execution really should get here
+	return # execution really should not get here
 
 class CanStore(object):
 	can_interface = env.bus # sets up the can network it will listen to
