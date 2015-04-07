@@ -1,2 +1,3 @@
 site_name: SAE Dashboard
 use_directory_urls: false
+theme: simplex

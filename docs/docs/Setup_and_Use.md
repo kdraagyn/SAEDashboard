@@ -41,6 +41,9 @@
 5. Now start editing gauges.py and widgetComiler.py to create custom gauges
 
 ##Install on Linux
+
+This install process is completely within the Linux terminal. You can use the download links above in the Windows installation process to download/unzip the files and then use the Linux terminal.s
+
 1. Install python3.4	
 		
 		sudo apt-get install python3.4
