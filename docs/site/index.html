@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="./img/favicon.ico">
 
-        <title>My Docs</title>
+        <title>SAE Dashboard</title>
 
         <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -33,15 +33,52 @@
         <!-- Collapsed navigation -->
         <div class="navbar-header">
             
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
 
             <!-- Main title -->
-            <a class="navbar-brand" href=".">My Docs</a>
+            <a class="navbar-brand" href="index.html">SAE Dashboard</a>
         </div>
 
         <!-- Expanded navigation -->
         <div class="navbar-collapse collapse">
             
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="setup/index.html">Setup</a>
+                    </li>
+                
+                
+                </ul>
+            
 
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li class="disabled">
+                    <a rel="next" >
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="setup/index.html">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+            </ul>
             
         </div>
     </div>
@@ -52,69 +89,68 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#installation-process">Installation Process</a></li>
+        <li class="main active"><a href="#formula-sae-dashboard-project">Formula SAE Dashboard Project</a></li>
         
-            <li><a href="#project-layout">Project layout</a></li>
+    
+        <li class="main "><a href="#project-layout">Project layout</a></li>
+        
+    
+        <li class="main "><a href="#canidsxml">Canids.xml</a></li>
+        
+    
+        <li class="main "><a href="#config">Config</a></li>
+        
+    
+        <li class="main "><a href="#dash-exceptions">Dash Exceptions</a></li>
+        
+    
+        <li class="main "><a href="#data-store">Data Store</a></li>
+        
+    
+        <li class="main "><a href="#environment-config">Environment Config</a></li>
+        
+    
+        <li class="main "><a href="#gauges">Gauges</a></li>
+        
+    
+        <li class="main "><a href="#main-runner">Main Runner</a></li>
+        
+    
+        <li class="main "><a href="#widget-compiler">Widget Compiler</a></li>
         
     
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="installation-process">Installation Process</h1>
-<p>To install everything on a windows machine:</p>
-<ol>
-<li>
-<p>Install Python3.4
-        </br><blockquote><a href="https://www.python.org/downloads/release/python-340/">Download Python3.4</a></blockquote></p>
-</li>
-<li>
-<p>Download and install the python-can library
-        </br><blockquote><a href="https://bitbucket.org/hardbyte/python-can/downloads">Download python-can</a></blockquote></p>
-</li>
-<li>
-<p>Download and install the pySerial library
-        </br><blockquote><a href="https://pypi.python.org/pypi/pyserial/2.7">Download pySerial</a></blockquote></p>
-</li>
-<li>
-<p>Create a "environmentConfig.py" file in the dashboard folder with these lines of code:</p>
-<h3 id="environmentconfigpy">environmentConfig.py</h3>
-<pre><code>class environment:
-    # set to "True" whenever you need to work with the GUI and random numbers should be generated
-    # set to "False" whenever the can bus should be read
-    guiDev = False
-
-    # set interface to listen to for can messages
-    #   vcan0:  used for dev on linux and for development
-    #       can0:       used for actual hardware messages and the production configuration
-    bus = "vcan0"
-
-    # absolute location of frames declaration file
-    framesFileDeclaration = "/path/to/canids.xml"
-
-    DEV = "dev"  # on restart both will
-    DASH = "dash"
-    PUSH = "push"
-
-    # environment type 
-    envType = DEV
-</code></pre>
-<p>This file only tells the program to configure environment to automatically generate random values, set can input type and set the canids.xml location</p>
-</li>
-<li>
-<p>Now start editing gauges.py and widgetComiler.py to create custom gauges</p>
-</li>
-</ol>
-<h2 id="project-layout">Project layout</h2>
-<pre><code>.gitignore    # git ignore file for use by git repository
-readme.txt
-restart.py
-updateBeagleBone.py
-main/
-    canids.xml
-tools/
+<h1 id="formula-sae-dashboard-project">Formula SAE Dashboard Project</h1>
+<p>Team: Formula Win</p>
+<p>Team Members: Keith Nygaard, Grant Spencer, Colin Royston, Kendall Samuel, Corbin Smith</p>
+<h1 id="project-layout">Project layout</h1>
+<pre><code>  main/
+      canids.xml
+      config.py
+      dashExceptions.py
+      dataStore.py
+      enviromentConfig.py
+      gauges.py
+      mainRunner.py
+      Wid
+  tools/
         can0.sh
+  .gitignore    # git ignore file for use by git repository
+  readme.txt
+  restart.py
+  updateBeagleBone.py
 </code></pre>
+<h1 id="canidsxml">Canids.xml</h1>
+<h1 id="config">Config</h1>
+<h1 id="dash-exceptions">Dash Exceptions</h1>
+<h1 id="data-store">Data Store</h1>
+<h1 id="environment-config">Environment Config</h1>
+<h1 id="gauges">Gauges</h1>
+<h1 id="main-runner">Main Runner</h1>
+<h1 id="widget-compiler">Widget Compiler</h1>
 </div>
             
         </div>
