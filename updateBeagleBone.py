@@ -18,7 +18,7 @@ class beagleUpdater:
 		".gitignore",
 		"environmentConfig.py",
 		__file__,
-		"tests"
+		"docs"
 	]
 
 	def __init__(self, ipAddress):
