@@ -134,12 +134,12 @@ class circularGauge(gauge):
 				outline=self.canvas["background"])
 
 			self.canvas.create_text(self.xloc + self.width / 2, self.yloc + self.height / 3, 
-				font=(self.font, int(150 * self.width / int(self.canvas["width"])), "bold"), 
+				font=(self.font, int(75 * self.width / int(self.canvas["width"])), "bold"), 
 				fill=self.fontcolor,
 				text="{0}".format(pack.data).upper())
 
 			self.canvas.create_text(self.xloc + self.width / 2, self.yloc + 4 * self.height / 9,
-				font=(self.font, int(75 * self.width / int(self.canvas["width"])), ),
+				font=(self.font, int(50 * self.width / int(self.canvas["width"])), ),
 				fill=self.fontcolor,
 				text="{0}".format(pack.parameter).upper())
 

@@ -2,8 +2,8 @@ class programConfig(object):
 	"""class that holds main program configuration data."""
 
 	# height and width of tkinter view
-	height = 720
-	width = 1280
+	height = 480
+	width = 800
 
 	# GUI constants
 	barColor = "purple1"
