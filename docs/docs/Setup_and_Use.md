@@ -97,7 +97,7 @@ This install process is completely within the Linux terminal. You can use the do
 			guiDev = False
 
 			# set interface to listen to for can messages
-			# 	vcan0: 	used for dev on linux and for development
+			#		vcan0: 	used for dev on linux and for development
 			#		can0:		used for actual hardware messages and the production configuration
 			bus = "vcan0"
 

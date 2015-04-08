@@ -84,14 +84,181 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#main-runner-class">Main Runner Class</a></li>
+        <li class="main active"><a href="#dash-runner-class">Dash Runner Class</a></li>
+        
+            <li><a href="#initself-parent">init(self, parent)</a></li>
+        
+            <li><a href="#resetself">reset(self)</a></li>
+        
+            <li><a href="#updatecanself">updateCan(self)</a></li>
+        
+            <li><a href="#alertself-label-message">alert(self, label, message)</a></li>
+        
+    
+        <li class="main "><a href="#dash-exceptions">Dash Exceptions</a></li>
+        
+            <li><a href="#missing-id-exception">Missing ID Exception</a></li>
+        
+            <li><a href="#unsafe-operation-exception">Unsafe Operation Exception</a></li>
+        
+    
+        <li class="main "><a href="#data-store">Data store</a></li>
+        
+            <li><a href="#can-listener">Can Listener</a></li>
+        
+            <li><a href="#canstore">CanStore</a></li>
+        
+            <li><a href="#randomstorecanstore">RandomStore(CanStore)</a></li>
+        
+            <li><a href="#canframe-class">canFrame class</a></li>
+        
+            <li><a href="#environmentconfig-class">EnvironmentConfig class</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="main-runner-class">Main Runner Class</h2>
+<h1 id="dash-runner-class">Dash Runner Class</h1>
+<h4 id="initself-parent"><strong>init</strong>(self, parent)</h4>
+<pre><code>sets up tkinter environment to the parent application
+sets up the background color, width, height
+sets up can store
+
+- randomly generated values
+- can read values
+
+read in can bus ids to canStore
+
+handles a file not found exception if initialization xml is not setup properly
+
+calls all the widgets from widget compiler and calls create on each gauge
+
+sets up callback to update can every 10 milliseconds
+</code></pre>
+<h4 id="resetself">reset(self)</h4>
+<pre><code>void is not implemented and not used
+</code></pre>
+<h4 id="updatecanself">updateCan(self)</h4>
+<pre><code>call for store to update from can bus
+
+self call to update screen
+</code></pre>
+<h4 id="alertself-label-message">alert(self, label, message)</h4>
+<pre><code>takes main label and message to throw to the screen
+
+wipes the screen of all gauges and only shows the alert message to the driver
+</code></pre>
+<h1 id="dash-exceptions">Dash Exceptions</h1>
+<h2 id="missing-id-exception">Missing ID Exception</h2>
+<p>Inherits: Exception</p>
+<p>Holds the wrong id that threw exception.
+Thrown when reading xml has an unidentified id.</p>
+<h2 id="unsafe-operation-exception">Unsafe Operation Exception</h2>
+<p>Thrown if any parameter is operating outside the safe range</p>
+<p>Holds warning message and the unsafe frame struct</p>
+<h1 id="data-store">Data store</h1>
+<h2 id="can-listener">Can Listener</h2>
+<p>sub process that constantly updates can data and the can data packet</p>
+<p>listens for pipe query to send updated data packet back to the GUI program</p>
+<h2 id="canstore">CanStore</h2>
+<h4 id="initself"><strong>init</strong>(self)</h4>
+<p>initializes and starts can listening sub process</p>
+<p>Sets up the correct CAN bus network to listen to</p>
+<h4 id="loadconfigxmlself-xmlpath">loadConfigXml(self, xmlPath)</h4>
+<p>reads in config xml file that defines all the frame configuration data. </p>
+<p>All data is read into a canFrame struct</p>
+<h4 id="getself-frameid">get(self, frameId)</h4>
+<p>if the frame id is a valid frame in the can store's dictionary than return the can frame</p>
+<h4 id="getpackself-packids">getPack(self, packIds)</h4>
+<p>consolidate all the data frames that correlate with the given packIds.</p>
+<p>returns an array of canFrame structs in the same order as the given packIds</p>
+<h4 id="updateself">update(self)</h4>
+<p>polls canListern sub process to update all the can frames in the data store</p>
+<h2 id="randomstorecanstore">RandomStore(CanStore)</h2>
+<p>inherits all the methods of canStore and will override all methods that directly deal with the can bus</p>
+<h4 id="initself_1"><strong>init</strong>(self)</h4>
+<p>Only creates a frame dictionary</p>
+<h4 id="updateself_1">update(self)</h4>
+<p>For every frame in the frame dictionary, generate a random value within it's min and max range, if that particular frame has a defined min and max</p>
+<h2 id="canframe-class">canFrame class</h2>
+<p>struct class that holds a all the data for a parameter that is sent over the can network. Mirrors the structure of the xml configuration file</p>
+<h3 id="instance-variables">instance variables:</h3>
+<ul>
+<li>
+<p>canId (string)</p>
+<pre><code>ID that is used on the CAN network
+</code></pre>
+</li>
+<li>
+<p>parameter (string)</p>
+<pre><code>can frame name (i.e. RPM, TPS, coolant temp, battery voltage)
+</code></pre>
+</li>
+<li>
+<p>length (string)</p>
+<pre><code>length of the data packet
+</code></pre>
+</li>
+<li>
+<p>type</p>
+<pre><code>data type of the sent data in the can frame (i.e unsigned int, signed int, boolean)
+</code></pre>
+</li>
+<li>
+<p>data</p>
+<pre><code>data of the can frame
+</code></pre>
+</li>
+<li>
+<p>max</p>
+<pre><code>maximum safe operating range
+</code></pre>
+</li>
+<li>
+<p>warning</p>
+<pre><code>warning message that will display when the safe operating range is exceeded
+</code></pre>
+</li>
+<li>
+<p>min</p>
+<pre><code>minimum safe operating range
+</code></pre>
+</li>
+</ul>
+<h2 id="environmentconfig-class">EnvironmentConfig class</h2>
+<p>instance Variables</p>
+<ul>
+<li>
+<p>bus</p>
+<p>bus network name. This should be the same name in linux if you run the command:</p>
+<pre><code>ifconfig
+</code></pre>
+</li>
+<li>
+<p>framesFileDecleration</p>
+<p>absolute path to the can ids xml configuration file</p>
+</li>
+<li>
+<p>envType</p>
+<p>environment type. See the environment static enums</p>
+</li>
+</ul>
+<p>static enums</p>
+<ul>
+<li>
+<p>DEV</p>
+<p>designates a developer environment where both the GUI and ecu can bus simulator is used</p>
+</li>
+<li>
+<p>DASH</p>
+<p>designates a production GUI environment. This should be used on the beaglebone that shows the dashboard.</p>
+</li>
+<li>
+<p>PUSH</p>
+<p>designates a production ecu can bus simulator environment. This should be used on the beaglebone that pushes can bus data to for the GUI to read</p>
+</li>
+</ul>
 </div>
         </div>
 
