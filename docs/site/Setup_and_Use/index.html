@@ -59,6 +59,12 @@
                 </li>
             
             
+            
+                <li >
+                    <a href="../tools/index.html">Tools</a>
+                </li>
+            
+            
             </ul>
 
             <!-- Search, Navigation and Repo links -->
@@ -84,10 +90,7 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#libraries-used">Libraries Used</a></li>
-        
-    
-        <li class="main "><a href="#install-on-windows">Install on Windows</a></li>
+        <li class="main active"><a href="#install-on-windows">Install on Windows</a></li>
         
     
         <li class="main "><a href="#install-on-linux">Install on Linux</a></li>
@@ -105,11 +108,21 @@
             <li><a href="#run-the-ecu-can-simulator">Run the ECU can simulator</a></li>
         
     
+        <li class="main "><a href="#updating-the-beaglebone-black">Updating the Beaglebone Black</a></li>
+        
+            <li><a href="#connect-the-beaglebone-black">Connect the Beaglebone Black</a></li>
+        
+            <li><a href="#setup-beaglebone-running-environment">Setup beaglebone running environment</a></li>
+        
+            <li><a href="#automatic-update">Automatic update</a></li>
+        
+            <li><a href="#manual-update">Manual update</a></li>
+        
+    
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="libraries-used">Libraries Used</h2>
 <h2 id="install-on-windows">Install on Windows</h2>
 <ol>
 <li>
@@ -282,6 +295,129 @@ channel = vcan0
 <p>In the root directory run the pushCan python script as a module:</p>
 <pre><code>python3.4 -m tools.pushCan
 </code></pre>
+<h1 id="updating-the-beaglebone-black">Updating the Beaglebone Black</h1>
+<p>There are a few different methods to update the beaglebone's software via usb cable. All of the methods below require the use of ssh and are much easier to handle on a linux machine. The automated version requires utilities that are given in a linux os environment so all scripts that need to be run need to run on a Linux machine.</p>
+<h3 id="connect-the-beaglebone-black">Connect the Beaglebone Black</h3>
+<p>The beaglebone black has a mini usb plug (similar to many portable hard drives) on the same side as the network connection on the board. Connect this usb to your computer and wait for the the Beaglebone to boot up (if it was originally off). No other peripheral needs to be connected to the beaglebone black, just the usb cable to the computer.</p>
+<h3 id="setup-beaglebone-running-environment">Setup beaglebone running environment</h3>
+<p>Since the environmentConfig.py is not copied to the beaglebone, this needs to be setup manually. To do this, you need to create the file on the beaglebone. </p>
+<ol>
+<li>Use the appropriate method to ssh into the board based on your OS (there are lots of tutorials online).</li>
+<li>
+<p>Navigate through the command line to the correct folder. This will be located in /home/ubuntu/SAEDashboard/main/.</p>
+<pre><code>cd /home/ubuntu/SAEDashboard/main/
+</code></pre>
+<p>or</p>
+<pre><code>cd ~/SAEDashboard/main/
+</code></pre>
+</li>
+<li>
+<p>Create or edit the environmentConfig.py file and make the same environmentConfig.py file as you can see on your laptop except with the correct configuration values. These are explained in the code design tab. </p>
+<pre><code>nano environmentConfig.py
+</code></pre>
+<p>You can use any command line editor that you prefer whether that be vi, nano, etc.</p>
+</li>
+<li>
+<p>Save the file and </p>
+</li>
+</ol>
+<h2 id="automatic-update"><strong>Automatic update</strong></h2>
+<p>The automatic update method requires the use of a linux based os running environment. THIS SCRIPT WILL NOT RUN ON WINDOWS.</p>
+<p>To automatically update the beaglebone using the included python script updateBeagleBone.py, the only real thing that needs to be done is run the command:</p>
+<pre><code>python3.4 updateBeagleBone.py
+</code></pre>
+<p>This program first checks for beaglebone connectivity before copying the required files to the beaglebone. </p>
+<p>Once the a connection has been established the script prints the files that are being copied and updated on the beaglebone. Files already on the beaglebone will not be deleted. </p>
+<h4 id="common-automatic-update-errors"><strong>Common automatic update errors</strong></h4>
+<p>If the script is not able to connect to the beaglebone, there are a few common issues.</p>
+<ol>
+<li>Beaglebone is not connected</li>
+<li>Beaglebone has not finished booting up (boot should only take 15 to 45 seconds) </li>
+<li>There is an issue with the virtual ip address that is set up over the usb cable.</li>
+</ol>
+<p>To fix the first two issues, you should reconnect the beaglebone to the computer and wait the required amount of time for the beaglebone to boot. </p>
+<p>If there is an issue with the virtual ip address, there could be a host of other reasons for the inability to connect to the beaglebone. This would require further debugging and probably no small amount of googling. To make sure that there is an issue somewhere with connecting with the beaglebone (as explained later in the manual update method) run this script in linux:</p>
+<pre><code>ping 192.168.7.2
+</code></pre>
+<p>If there is a response than the the beaglebone is properly connected.</p>
+<p>If there is an issue with ssh keys or other ssh problems. The script will try to fix this by generating the proper keys and copying them to the beaglebone. You may be prompted for a password for the board, if that is the case:</p>
+<pre><code>Username: ubuntu
+Password: temppwd
+</code></pre>
+<p>Any other issues will need to be handled through the manual method. </p>
+<h4 id="change-files-that-are-copied"><strong>Change files that are copied</strong></h4>
+<p>To change the files that the automatic updater copies edit the updateBeagleBone.py script's variable:__ignore </p>
+<p>The copy algorithm looks at filenames and directories the same so if the full name is in the __ignore than the file or folder should be ignored. It isn't as sophisticated as the .gitignore system.</p>
+<h2 id="manual-update"><strong>Manual update</strong></h2>
+<p>This process is more advanced and could break the system on the beaglebone. If there are any issues, make sure you take the proper precautions to not delete any files or move any directories. Everything should go smoothly but be warned.. [Enter Pirates of the Caribbean picture here]</p>
+<h3 id="linux-update"><strong>Linux update</strong></h3>
+<ol>
+<li>
+<p>Check that the beaglebone is connected to the computer:</p>
+<p>ping 192.168.7.2</p>
+<p>192.168.7.2 is the virtual ip address that the beaglebone sets up that the computer is able to communicate through. The proper output will show responses like this:</p>
+<pre><code>64 bytes from 192.168.7.2: icmp_seq=1 ttl=64 time=0.434 ms
+64 bytes from 192.168.7.2: icmp_seq=2 ttl=64 time=0.272 ms
+64 bytes from 192.168.7.2: icmp_seq=3 ttl=64 time=0.313 ms
+</code></pre>
+<p>If these are continually displayed, that means that the beaglebone is connected and is ready to be updated.</p>
+</li>
+<li>
+<p>ssh into the beaglebone</p>
+<pre><code>ssh ubuntu@192.168.7.2
+</code></pre>
+<p>if you run into any issues, there are many helpful tutorials online regarding ssh and how to use it. If you haven't set up for the beaglebone to remember your ssh-key (tutorials on how to do that online) than the credentials to login are:</p>
+<pre><code>username:ubuntu
+password:temppwd
+</code></pre>
+</li>
+<li>
+<p>Make sure that configuration files are setup (explained earlier)</p>
+</li>
+<li>
+<p>Exit out of the ssh terminal</p>
+<pre><code>exit
+</code></pre>
+</li>
+<li>
+<p>Start copying files over to the beaglebone.</p>
+<p>The structure will look similar to below but will change for every file that you copy and the destination that you need that file to go.</p>
+<pre><code>scp [/path/to/file/on/your/computer/] ubuntu@192.168.7.2:/home/ubuntu/SAEDashboard/[file or path]
+</code></pre>
+<p>An example of copying over the dataStore.py file is below</p>
+<pre><code>scp [/path/to/dataStore/dashboard]/main/dataStore.py ubuntu@192.168.7.2:/home/ubuntu/SAEDashboard/main/dataStore.py
+</code></pre>
+<p>This needs to be done for all the files that have been changed or that need to be updated to the board.</p>
+</li>
+<li>
+<p>You can check your work and make sure the directory didn't get messed up by using ssh to reconnect to the device and checking the file structure/files using</p>
+<pre><code>cd
+</code></pre>
+<p>and</p>
+<pre><code>vi
+</code></pre>
+<p>or</p>
+<pre><code>nano
+</code></pre>
+</li>
+<li>
+<p>After everything is working, the python program needs to be restarted either through the restart.py python script, restarting the beaglebone, or by killing the process.</p>
+<h4 id="to-kill-a-python-process"><strong>To kill a python process</strong></h4>
+<ol>
+<li>
+<p>Get the PID of all the python processes. The command process will be included in the list, it will have the word <strong>grep</strong> in the line description.</p>
+<p>ps -ux | grep python3.4</p>
+</li>
+<li>
+<p>Using all the shown python3.4 process shown from the previous command kill using <strong>pkill</strong> or any other command that your linux environment uses.</p>
+<p>pkill [PID]</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="windows-update"><strong>Windows update</strong></h3>
+<p>There are many ways to ssh into the beaglebone in windows (terminal and graphical) and this will be left up to you. </p>
+<p>Programs like winscp and filezilla might be the easiest to use as graphical interfaces go and that way you can edit and copy whatever files you need. Follow the same type of procedure as in linux (i.e. the updating of files)</p>
 </div>
         </div>
 

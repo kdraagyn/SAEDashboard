@@ -59,6 +59,12 @@
                 </li>
             
             
+            
+                <li >
+                    <a href="../tools/index.html">Tools</a>
+                </li>
+            
+            
             </ul>
 
             <!-- Search, Navigation and Repo links -->
@@ -69,8 +75,8 @@
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
-                <li class="disabled">
-                    <a rel="prev" >
+                <li >
+                    <a rel="prev" href="../tools/index.html">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -86,13 +92,7 @@
     
         <li class="main active"><a href="#dash-runner-class">Dash Runner Class</a></li>
         
-            <li><a href="#initself-parent">init(self, parent)</a></li>
-        
-            <li><a href="#resetself">reset(self)</a></li>
-        
-            <li><a href="#updatecanself">updateCan(self)</a></li>
-        
-            <li><a href="#alertself-label-message">alert(self, label, message)</a></li>
+            <li><a href="#instance-methods">Instance Methods</a></li>
         
     
         <li class="main "><a href="#dash-exceptions">Dash Exceptions</a></li>
@@ -112,7 +112,28 @@
         
             <li><a href="#canframe-class">canFrame class</a></li>
         
-            <li><a href="#environmentconfig-class">EnvironmentConfig class</a></li>
+    
+        <li class="main "><a href="#environmentconfig-class">EnvironmentConfig class</a></li>
+        
+            <li><a href="#instance-variables_1">instance Variables</a></li>
+        
+            <li><a href="#static-enums">static enums</a></li>
+        
+    
+        <li class="main "><a href="#gauge-class">Gauge Class</a></li>
+        
+            <li><a href="#gauge-abstract-class">Gauge abstract class</a></li>
+        
+            <li><a href="#textgaugegauge">TextGauge(Gauge)</a></li>
+        
+            <li><a href="#circular-gaugegauge">Circular Gauge(Gauge)</a></li>
+        
+            <li><a href="#bargaugegauge">BarGauge(Gauge)</a></li>
+        
+    
+        <li class="main "><a href="#helper-methods">Helper Methods</a></li>
+        
+            <li><a href="#compilegauges">compileGauges()</a></li>
         
     
     </ul>
@@ -120,35 +141,27 @@
             <div class="col-md-9" role="main">
 
 <h1 id="dash-runner-class">Dash Runner Class</h1>
-<h4 id="initself-parent"><strong>init</strong>(self, parent)</h4>
-<pre><code>sets up tkinter environment to the parent application
+<h2 id="instance-methods">Instance Methods</h2>
+<h4 id="_init_self-parent"><strong><em>_init</em></strong>_(self, parent)</h4>
+<p>sets up tkinter environment to the parent application
 sets up the background color, width, height
-sets up can store
-
-- randomly generated values
-- can read values
-
-read in can bus ids to canStore
-
-handles a file not found exception if initialization xml is not setup properly
-
-calls all the widgets from widget compiler and calls create on each gauge
-
-sets up callback to update can every 10 milliseconds
-</code></pre>
-<h4 id="resetself">reset(self)</h4>
-<pre><code>void is not implemented and not used
-</code></pre>
-<h4 id="updatecanself">updateCan(self)</h4>
-<pre><code>call for store to update from can bus
-
-self call to update screen
-</code></pre>
-<h4 id="alertself-label-message">alert(self, label, message)</h4>
-<pre><code>takes main label and message to throw to the screen
-
-wipes the screen of all gauges and only shows the alert message to the driver
-</code></pre>
+sets up can store</p>
+<ul>
+<li><strong>randomly</strong> generated values</li>
+<li><strong>can</strong> read values</li>
+</ul>
+<p>read in can bus ids to canStore</p>
+<p>handles a file not found exception if initialization xml is not setup properly</p>
+<p>calls all the widgets from widget compiler and calls <strong>create</strong> on each gauge</p>
+<p>sets up callback to update can every 10 milliseconds</p>
+<h4 id="resetself"><strong>reset</strong>(self)</h4>
+<p>void is not implemented and not used</p>
+<h4 id="updatecanself"><strong>updateCan</strong>(self)</h4>
+<p>call for store to update from can bus</p>
+<p>self call to update screen</p>
+<h4 id="alertself-label-message"><strong>alert</strong>(self, label, message)</h4>
+<p>takes main label and message to throw to the screen</p>
+<p>wipes the screen of all gauges and only shows the alert message to the driver</p>
 <h1 id="dash-exceptions">Dash Exceptions</h1>
 <h2 id="missing-id-exception">Missing ID Exception</h2>
 <p>Inherits: Exception</p>
@@ -162,103 +175,246 @@ Thrown when reading xml has an unidentified id.</p>
 <p>sub process that constantly updates can data and the can data packet</p>
 <p>listens for pipe query to send updated data packet back to the GUI program</p>
 <h2 id="canstore">CanStore</h2>
-<h4 id="initself"><strong>init</strong>(self)</h4>
+<h4 id="_init_self"><strong><em>_init</em></strong>_(self)</h4>
 <p>initializes and starts can listening sub process</p>
 <p>Sets up the correct CAN bus network to listen to</p>
-<h4 id="loadconfigxmlself-xmlpath">loadConfigXml(self, xmlPath)</h4>
+<h4 id="loadconfigxmlself-xmlpath"><strong> loadConfigXml</strong>(self, xmlPath)</h4>
 <p>reads in config xml file that defines all the frame configuration data. </p>
 <p>All data is read into a canFrame struct</p>
-<h4 id="getself-frameid">get(self, frameId)</h4>
+<h4 id="getself-frameid"><strong>get</strong>(self, frameId)</h4>
 <p>if the frame id is a valid frame in the can store's dictionary than return the can frame</p>
-<h4 id="getpackself-packids">getPack(self, packIds)</h4>
+<h4 id="getpackself-packids"><strong>getPack</strong>(self, packIds)</h4>
 <p>consolidate all the data frames that correlate with the given packIds.</p>
 <p>returns an array of canFrame structs in the same order as the given packIds</p>
-<h4 id="updateself">update(self)</h4>
+<h4 id="updateself"><strong>update</strong>(self)</h4>
 <p>polls canListern sub process to update all the can frames in the data store</p>
 <h2 id="randomstorecanstore">RandomStore(CanStore)</h2>
 <p>inherits all the methods of canStore and will override all methods that directly deal with the can bus</p>
-<h4 id="initself_1"><strong>init</strong>(self)</h4>
-<p>Only creates a frame dictionary</p>
-<h4 id="updateself_1">update(self)</h4>
+<h4 id="_init_self_1"><strong><em>_init</em></strong>_(self)</h4>
+<p>Only <strong>creates</strong> a frame dictionary</p>
+<h4 id="updateself_1"><strong>update</strong>(self)</h4>
 <p>For every frame in the frame dictionary, generate a random value within it's min and max range, if that particular frame has a defined min and max</p>
 <h2 id="canframe-class">canFrame class</h2>
 <p>struct class that holds a all the data for a parameter that is sent over the can network. Mirrors the structure of the xml configuration file</p>
 <h3 id="instance-variables">instance variables:</h3>
 <ul>
 <li>
-<p>canId (string)</p>
-<pre><code>ID that is used on the CAN network
-</code></pre>
+<p><strong>canId</strong> (string)</p>
+<p>ID that is used on the CAN network</p>
 </li>
 <li>
-<p>parameter (string)</p>
-<pre><code>can frame name (i.e. RPM, TPS, coolant temp, battery voltage)
-</code></pre>
+<p><strong>parameter</strong> (string)</p>
+<p>can frame name (i.e. RPM, TPS, coolant temp, battery voltage)</p>
 </li>
 <li>
-<p>length (string)</p>
-<pre><code>length of the data packet
-</code></pre>
+<p><strong>length</strong> (string)</p>
+<p>length of the data packet</p>
 </li>
 <li>
-<p>type</p>
-<pre><code>data type of the sent data in the can frame (i.e unsigned int, signed int, boolean)
-</code></pre>
+<p><strong>type</strong></p>
+<p>data type of the sent data in the can frame (i.e unsigned int, signed int, boolean)</p>
 </li>
 <li>
-<p>data</p>
-<pre><code>data of the can frame
-</code></pre>
+<p><strong>data</strong></p>
+<p>data of the can frame</p>
 </li>
 <li>
-<p>max</p>
-<pre><code>maximum safe operating range
-</code></pre>
+<p><strong>max</strong></p>
+<p>maximum safe operating range</p>
 </li>
 <li>
-<p>warning</p>
-<pre><code>warning message that will display when the safe operating range is exceeded
-</code></pre>
+<p><strong>warning</strong></p>
+<p>warning message that will display when the safe operating range is exceeded</p>
 </li>
 <li>
-<p>min</p>
-<pre><code>minimum safe operating range
-</code></pre>
+<p><strong>min</strong></p>
+<p>minimum safe operating range</p>
 </li>
 </ul>
-<h2 id="environmentconfig-class">EnvironmentConfig class</h2>
-<p>instance Variables</p>
+<h1 id="environmentconfig-class">EnvironmentConfig class</h1>
+<h4 id="instance-variables_1"><strong>instance</strong> Variables</h4>
 <ul>
 <li>
-<p>bus</p>
+<p><strong>bus</strong></p>
 <p>bus network name. This should be the same name in linux if you run the command:</p>
 <pre><code>ifconfig
 </code></pre>
 </li>
 <li>
-<p>framesFileDecleration</p>
+<p><strong>framesFileDecleration</strong></p>
 <p>absolute path to the can ids xml configuration file</p>
 </li>
 <li>
-<p>envType</p>
+<p><strong>envType</strong></p>
 <p>environment type. See the environment static enums</p>
 </li>
 </ul>
-<p>static enums</p>
+<h4 id="static-enums"><strong>static</strong> enums</h4>
 <ul>
 <li>
-<p>DEV</p>
+<p><strong>DEV</strong></p>
 <p>designates a developer environment where both the GUI and ecu can bus simulator is used</p>
 </li>
 <li>
-<p>DASH</p>
+<p><strong>DASH</strong></p>
 <p>designates a production GUI environment. This should be used on the beaglebone that shows the dashboard.</p>
 </li>
 <li>
-<p>PUSH</p>
+<p><strong>PUSH</strong></p>
 <p>designates a production ecu can bus simulator environment. This should be used on the beaglebone that pushes can bus data to for the GUI to read</p>
 </li>
 </ul>
+<h1 id="gauge-class">Gauge Class</h1>
+<p>The gauge class is used during rendering to define how information is displayed to the driver. The three methods that are required are an <strong><em>_init</em></strong>_, <strong>create</strong>, and <strong>updateView</strong> method</p>
+<h3 id="gauge-abstract-class">Gauge abstract class</h3>
+<h4 id="instance-variables_2"><strong>Instance</strong> Variables</h4>
+<ul>
+<li>
+<p><strong>dataIds</strong></p>
+<p>can bus ids that the gauge has subscribed to</p>
+</li>
+<li>
+<p><strong>xloc</strong></p>
+</li>
+<li>
+<p><strong>yloc</strong></p>
+</li>
+<li>
+<p><strong>width</strong></p>
+</li>
+<li>
+<p><strong>height</strong></p>
+</li>
+</ul>
+<h4 id="instance-methods_1"><strong>Instance</strong> Methods</h4>
+<ul>
+<li>
+<p><strong>subscribe</strong>(self, canIds*)</p>
+<p>add all the canIds that the gauge needs to listen to</p>
+</li>
+<li>
+<p><strong>getSubscriptions</strong>()</p>
+<p>return all the subscription ids that the gauge has subscribed to</p>
+</li>
+</ul>
+<h3 id="textgaugegauge">TextGauge(Gauge)</h3>
+<p>Inherits: Gauge</p>
+<p>Can display any id or parameter, with no limit on the number of ids that can show up. If there are more than one id that is subscribed to the next id is rendered underneath the previous one.  </p>
+<h4 id="instance-variables_3"><strong>Instance</strong> Variables</h4>
+<ul>
+<li>
+<p><strong>fontSize</strong></p>
+<p>the font size when text is displayed to the screen</p>
+</li>
+<li>
+<p><strong>fontColor</strong></p>
+</li>
+</ul>
+<h4 id="instance-methods_2"><strong>Instance</strong> Methods</h4>
+<ul>
+<li>
+<p><strong><em>_init</em></strong>_(self, x, y, *subscriptions, fontSize=12, font="Times", fontcolor="black")</p>
+</li>
+<li>
+<p><strong>create</strong>(self, canvas)</p>
+<p>sets the tkinter canvas to draw to</p>
+<p>sets up the initial drawing of the text gauge</p>
+</li>
+<li>
+<p><strong>updateView</strong>(self, dataPack)</p>
+<p>redraws the gauge with the updated dataPack</p>
+<p>dataPack should be an dictionary of <id, values></p>
+</li>
+<li>
+<p><strong>renderText</strong>(self, dataPack)</p>
+<p>for every id that has been subscribed to, renders the title and the value to the screen</p>
+</li>
+</ul>
+<h3 id="circular-gaugegauge">Circular Gauge(Gauge)</h3>
+<p>Inherits: Gauge</p>
+<p>Can only display one id or parameter that has a defined min and max value in the canids.xml file. </p>
+<h4 id="instance-variables_4"><strong>Instance</strong> Variables</h4>
+<ul>
+<li>
+<p><strong>startAngle</strong></p>
+<p>angle that the gauge 0 value should start at relative the -<strong>y</strong> vector</p>
+</li>
+<li>
+<p><strong>color</strong></p>
+<p>color of the filled in gauge</p>
+</li>
+<li>
+<p><strong>font</strong></p>
+<p>fontStyle that is used for the rendered text. Reference tkinter for available fonts</p>
+</li>
+<li>
+<p><strong>fontColor</strong></p>
+</li>
+</ul>
+<h4 id="instance-methods_3"><strong>Instance</strong> Methods</h4>
+<ul>
+<li>
+<p><strong><em>_init</em></strong>_(self, x, y, width, height, subscription, startAngle=0, color="black", font="Times", fontcolor = "black")</p>
+</li>
+<li>
+<p><strong>create</strong>(self, canvas)</p>
+</li>
+<li>
+<p><strong>updateView</strong>(self, dataPack)</p>
+</li>
+</ul>
+<h3 id="bargaugegauge">BarGauge(Gauge)</h3>
+<p>Inherits: Gauge</p>
+<p>Renders any number of ids or parameters that have a defined minimum and maximum value in the canids.xml file. For multiple ids that have been subscribed to, the extra ids are rendered next to the first id. The first gauge is where the xloc and yloc point to and then the rest of the gauges are rendered next to it horizontally or vertically depending on the initialization of the gauge.</p>
+<h4 id="instance-variables_5"><strong>Instance</strong> Variables</h4>
+<ul>
+<li>
+<p><strong>fontColor</strong></p>
+</li>
+<li>
+<p><strong>orientation</strong> = HORIZONTAL, VERTICAL</p>
+</li>
+<li>
+<p><strong>padding</strong></p>
+<p>sets the gap between multiple gauges</p>
+</li>
+<li>
+<p><strong>color</strong></p>
+<p>bar color</p>
+</li>
+<li>
+<p><strong>fontcolor</strong></p>
+</li>
+</ul>
+<h4 id="static-enums_1"><strong>Static</strong> Enums</h4>
+<ul>
+<li>
+<p><strong>HORIZONTAL</strong> - sets gauge to be rendered horizontally with text on left, bar on right, and multiple gauges rendered underneath first gauge.</p>
+</li>
+<li>
+<p><strong>VERTICAL</strong> - sets gauge to be rendered vertically with text at bottom, bar on top, and multiple gauges rendered to the right of the first gauge.</p>
+</li>
+</ul>
+<h4 id="instance-methods_4"><strong>Instance</strong> Methods</h4>
+<ul>
+<li>
+<p><strong><em>_init</em></strong>_(self, x, y, width, height, *subscriptions, orientation=HORIZONTAL, padding=5, color="black", font="Times", fontcolor="black")</p>
+</li>
+<li>
+<p><strong>create</strong>(self, canvas)</p>
+<p>sets the tkinter canvas to render to</p>
+</li>
+<li>
+<p><strong>updateView</strong>(self, dataPack)</p>
+<p>updates the display</p>
+</li>
+</ul>
+<h1 id="helper-methods">Helper Methods</h1>
+<h4 id="compilegauges"><strong>compileGauges</strong>()</h4>
+<p>Where all the gauges are added to the gauge array and were all the gauges are initialized. The Gauge array is passed back to the main runner where all the declared gauges are rendered to the screen.</p>
+<p>To add a gauge to the gauge array:</p>
+<pre><code>gauges.append({guaugeType})
+</code></pre>
 </div>
         </div>
 
