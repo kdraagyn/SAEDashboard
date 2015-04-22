@@ -130,6 +130,8 @@
         
             <li><a href="#bargaugegauge">BarGauge(Gauge)</a></li>
         
+            <li><a href="#warninggaugegauge">warningGauge(gauge)</a></li>
+        
     
         <li class="main "><a href="#helper-methods">Helper Methods</a></li>
         
@@ -399,6 +401,46 @@ Thrown when reading xml has an unidentified id.</p>
 <ul>
 <li>
 <p><strong><em>_init</em></strong>_(self, x, y, width, height, *subscriptions, orientation=HORIZONTAL, padding=5, color="black", font="Times", fontcolor="black")</p>
+</li>
+<li>
+<p><strong>create</strong>(self, canvas)</p>
+<p>sets the tkinter canvas to render to</p>
+</li>
+<li>
+<p><strong>updateView</strong>(self, dataPack)</p>
+<p>updates the display</p>
+</li>
+</ul>
+<h3 id="warninggaugegauge">warningGauge(gauge)</h3>
+<h4 id="instance-variables_6"><strong>Instance</strong> Variables</h4>
+<ul>
+<li>
+<p><strong>fontColor</strong></p>
+</li>
+<li>
+<p><strong>oncolor</strong></p>
+<p>color of the warning light when it is turned on</p>
+</li>
+<li>
+<p><strong>ofcolor</strong></p>
+<p>color of the warning light when it is turned off</p>
+</li>
+<li>
+<p><strong>fontcolor</strong></p>
+</li>
+<li>
+<p><strong>displayText</strong></p>
+<p>text to display when the warning light is turned on</p>
+</li>
+<li>
+<p>font</p>
+<p>font of the displayed text</p>
+</li>
+</ul>
+<h4 id="instance-methods_5"><strong>Instance Methods</strong></h4>
+<ul>
+<li>
+<p><strong><em>_init</em></strong>_(self, x, y, width, height, *subscriptions, fontSize=12, offcolor="black", oncolor="black", displayText="warning", font="Times", fontcolor="black", warningColor="red")</p>
 </li>
 <li>
 <p><strong>create</strong>(self, canvas)</p>

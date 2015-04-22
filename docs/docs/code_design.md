@@ -304,6 +304,41 @@ Renders any number of ids or parameters that have a defined minimum and maximum 
 
 	updates the display
 
+###warningGauge(gauge)
+
+####__Instance__ Variables
+
+- __fontColor__
+
+- __oncolor__
+
+	color of the warning light when it is turned on
+
+- __ofcolor__
+
+	color of the warning light when it is turned off
+
+- __fontcolor__
+
+- __displayText__
+
+	text to display when the warning light is turned on
+
+- font
+
+	font of the displayed text
+
+####__Instance Methods__
+- ____init____(self, x, y, width, height, *subscriptions, fontSize=12, offcolor="black", oncolor="black", displayText="warning", font="Times", fontcolor="black", warningColor="red")
+
+- __create__(self, canvas)
+
+	sets the tkinter canvas to render to
+
+- __updateView__(self, dataPack)
+
+	updates the display
+
 #Helper Methods
 
 ####__compileGauges__()

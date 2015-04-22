@@ -236,7 +236,7 @@ class barGauge(gauge):
 				pastx += 2 * self.width + self.paddin
 
 class warningGauge(gauge):
-	def __init__(self, x, y, width, height, *subscriptions, fontSize=12, offcolor="black", oncolor="black", displayText="warning", font="Times", fontcolor="black", warningColor="red"):
+	def __init__(self, x, y, width, height, *subscriptions, fontSize=12, offcolor="black", oncolor="red", displayText="warning", font="Times", fontcolor="black"):
 		super(warningGauge, self).__init__()
 		self.xloc = x
 		self.yloc = y
@@ -244,7 +244,6 @@ class warningGauge(gauge):
 		self.height = height
 		self.font = font
 		self.fontcolor = fontcolor
-		self.warningColor = warningColor
 		self.fontSize = fontSize
 		self.displayText = displayText
 		self.oncolor = oncolor

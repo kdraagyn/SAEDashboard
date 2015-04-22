@@ -117,7 +117,7 @@ This install process is completely within the Linux terminal. You can use the do
 	      enviromentConfig.py
 	      gauges.py
 	      mainRunner.py
-	      Wid
+	      WidgetCompiler.py
 	  tools/
 	  		can0.sh
 	  		pushCan.py
