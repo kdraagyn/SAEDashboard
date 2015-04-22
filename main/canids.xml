@@ -8,6 +8,7 @@
 			parameter
 			max
 			warning
+			change
  -->
 <frames>
 	<frame>
@@ -18,6 +19,7 @@
 		<max>14500</max>
 		<warning>RPMs are too high</warning>
 		<min>0</min>
+		<change>12500</change>
 	</frame>
 	<frame>
 		<canId>0CFFF050</canId>
@@ -39,8 +41,9 @@
 		<length>2</length>
 		<type>signed int</type>
 		<parameter>Ignition Angle</parameter>
-		<max>360</max>
+		<max>40</max>
 		<warning>Ignition Angle is Too High</warning>
+		<min>5</min>
 	</frame>
 	<frame>
 		<canId>0CFFF148</canId>
@@ -145,21 +148,24 @@
 		<parameter>Battery Voltage</parameter>
 		<max>15</max>
 		<warning>Battery voltage is too high</warning>
-		<min>10</min>
+		<min>11</min>
 	</frame>
 	<frame>
 		<canId>0CFFF550</canId>
 		<length>2</length>
 		<type>signed int</type>
 		<parameter>Air Temp</parameter>
+		<max>200</max>
+		<min>0</min>
 	</frame>
 	<frame>
 		<canId>0CFFF552</canId>
 		<length>2</length>
 		<type>signed int</type>
 		<parameter>Coolant Temp</parameter>
-		<max>250</max>
+		<max>205</max>
 		<warning>Coolant Temp Too High</warning>
+		<min>130</min>
 	</frame>
 	<frame>
 		<canId>0CFFF554</canId>

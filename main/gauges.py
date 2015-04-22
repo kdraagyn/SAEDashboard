@@ -233,5 +233,53 @@ class barGauge(gauge):
 					pastx + self.width, 
 					pasty + self.height - labelHeight,
 					fill=self.color)
-				pastx += 2 * self.width + self.padding
-# CODE EVERYTHING UNDER HERE
+				pastx += 2 * self.width + self.paddin
+
+class warningGauge(gauge):
+	def __init__(self, x, y, width, height, *subscriptions, fontSize=12, offcolor="black", oncolor="black", displayText="warning", font="Times", fontcolor="black", warningColor="red"):
+		super(warningGauge, self).__init__()
+		self.xloc = x
+		self.yloc = y
+		self.width = width
+		self.height = height
+		self.font = font
+		self.fontcolor = fontcolor
+		self.warningColor = warningColor
+		self.fontSize = fontSize
+		self.displayText = displayText
+		self.oncolor = oncolor
+		self.offcolor = offcolor
+
+		for subscription in subscriptions:
+			self.subscribe(subscription)
+
+	def create(self, canvas):
+		self.canvas = canvas
+
+	def updateView(self, dataPack):
+		# create warning light
+		for pack in dataPack:
+			centerX = self.xloc + self.width / 2
+			centerY = self.yloc + self.height / 2
+
+			if(pack.data > pack.change):
+				self.canvas.create_rectangle(
+					self.xloc,
+					self.yloc,
+					self.xloc + self.width,
+					self.yloc + self.height,
+					fill = self.oncolor)
+				self.canvas.create_text(
+					centerX,
+					centerY,
+					fill=self.fontcolor,
+					anchor="center",
+					font=(self.font, int(self.width * (3/7)),),
+					text=self.displayText)
+			else:
+				self.canvas.create_rectangle(
+					self.xloc,
+					self.yloc,
+					self.xloc + self.width,
+					self.yloc + self.height,
+					fill = self.offcolor)

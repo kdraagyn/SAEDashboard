@@ -38,15 +38,14 @@ def compileGauges():
 	# declaring just means gauges.append("name of gauge class you write"())
 	#
 	# your code starts here
-	gauges.append(circularGauge(programConfig.width / 3 , (programConfig.width - programConfig.height) / 3, programConfig.width / 3, programConfig.width / 3, "0CFFF048", startAngle = 45, color=programConfig.barColor, fontcolor=programConfig.fontColor))
-	gauges.append(circularGauge(programConfig.width / 12, 2 * programConfig.height / 3, programConfig.width / 5, programConfig.width / 5, "0CFFF050", startAngle = 45, color=programConfig.barColor, fontcolor=programConfig.fontColor))
-	gauges.append(circularGauge(int(programConfig.width *.7), 2 * programConfig.height / 3, programConfig.width / 5, programConfig.width / 5, "0CFFF548", startAngle = 45, color=programConfig.barColor, fontcolor=programConfig.fontColor))
-	gauges.append(textGauge(programConfig.width, 10, "0CFFF048", "0CFFF148", "0CFFF050", "0CFFF150", "0CFFF052", "0CFFF658", "0CFFF656", 
-		"0CFFF654", "0CFFF652", "0CFFF650", "0CFFF648", "0CFFF554", "0CFFF552", "0CFFF550", fontSize=10, fontcolor=programConfig.fontColor))
+	gauges.append(circularGauge(programConfig.width / 3 , (programConfig.width - programConfig.height) / 5, programConfig.width / 2, programConfig.width / 2, "0CFFF048", startAngle = 45, color=programConfig.barColor, fontcolor=programConfig.fontColor))
+	gauges.append(circularGauge(programConfig.width / 12, 2 * programConfig.height / 3, programConfig.width / 5, programConfig.width / 5, "0CFFF552", startAngle = 45, color=programConfig.barColor, fontcolor=programConfig.fontColor))
+	# gauges.append(circularGauge(int(programConfig.width *.7), 2 * programConfig.height / 3, programConfig.width / 5, programConfig.width / 5, "0CFFF548", startAngle = 45, color=programConfig.barColor, fontcolor=programConfig.fontColor))
+	# gauges.append(textGauge(programConfig.width, 10, "0CFFF048", "0CFFF148", "0CFFF050", "0CFFF150", "0CFFF052", "0CFFF658", "0CFFF656", 
+		# "0CFFF654", "0CFFF652", "0CFFF650", "0CFFF648", "0CFFF554", "0CFFF552", "0CFFF550", fontSize=10, fontcolor=programConfig.fontColor))
 	# gauges.append(textGauge(programConfig.width, 10, "0CFFF548", "0CFFF454", "0CFFF452", "0CFFF450", "0CFFF448", "0CFFF354",
 	# "0CFFF352", "0CFFF350", "0CFFF348", "0CFFF254", "0CFFF252", "0CFFF250", "0CFFF248", fontSize=10, fontcolor=programConfig.fontColor))
-	gauges.append(barGauge(int(programConfig.width *.45), int(programConfig.height *.7), int(programConfig.width *.1), int(programConfig.height *.07), "0CFFF048", "0CFFF054", padding=20, color=programConfig.barColor, fontcolor=programConfig.fontColor))
-	gauges.append(barGauge(int(programConfig.width *.09), int(programConfig.height *.2), int(programConfig.width *.04), int(programConfig.height *.3), "0CFFF552", "0CFFF050", orientation=barGauge.VERTICAL, padding=20, color=programConfig.barColor, fontcolor=programConfig.fontColor))
-	# your code stops here
-
+	gauges.append(barGauge(int(programConfig.width *.25), int(programConfig.height *.12), int(programConfig.width *.12), int(programConfig.height *.1), "0CFFF548", padding=20, color=programConfig.barColor, fontcolor=programConfig.fontColor))
+	# gauges.append(barGauge(int(programConfig.width *.09), int(programConfig.height *.2), int(programConfig.width *.04), int(programConfig.height *.3), "0CFFF552", "0CFFF050", orientation=barGauge.VERTICAL, padding=20, color=programConfig.barColor, fontcolor=programConfig.fontColor))
+	gauges.append(warningGauge(int(programConfig.width * .1), int(programConfig.height * .5), int(programConfig.width * .12), int(programConfig.height * .1), "0CFFF048", displayText="Shift", offcolor=programConfig.backgroundColor, oncolor=programConfig.barColor, fontcolor=programConfig.fontColor))
 	return gauges

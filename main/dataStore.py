@@ -57,6 +57,8 @@ class CanStore(object):
 				frame.warning = xmlframe.findtext("warning")
 			if(xmlframe.findtext("min") != None):
 				frame.min = xmlframe.findtext("min")
+			if(xmlframe.findtext("change") != None):
+				frame.change = int(xmlframe.findtext("change"))
 
 			self.filters.append({'can_id':int(frame.canId,16), 'can_mask':0x1fffffff})
 			self.frameDictionary[frame.canId] = frame
@@ -117,3 +119,4 @@ class canFrame(object):
 		self.max = None
 		self.warning = None
 		self.min = None
+		self.change = None
