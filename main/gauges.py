@@ -273,7 +273,7 @@ class warningGauge(gauge):
 					centerY,
 					fill=self.fontcolor,
 					anchor="center",
-					font=(self.font, int(self.width * (3/7)),),
+					font=(self.font, int(self.width * (2	/7)),),
 					text=self.displayText)
 			else:
 				self.canvas.create_rectangle(
